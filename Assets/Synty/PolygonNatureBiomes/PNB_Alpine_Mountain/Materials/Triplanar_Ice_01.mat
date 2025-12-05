@@ -21,13 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Triplanar_Ice_01
-  m_Shader: {fileID: -6465566751694194690, guid: 19e269a311c45cd4482cf0ac0e694503, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 19e269a311c45cd4482cf0ac0e694503,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _OVERLAY_UV_CHANNEL_UV0
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHATEST_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -60,6 +61,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Overlay_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Emission_Texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -169,6 +174,7 @@ Material:
     - _Snow_Transition_Threshold: 1
     - _Snow_Transition_Threshold_Step_Count: 4
     - _Snow_Transition_Threshold_Steps: 0
+    - _Snow_Use_World_Up: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
@@ -177,8 +183,10 @@ Material:
     - _TopSmoothness: 0.2
     - _Top_Metallic: 0
     - _Top_Smoothness: 0.2
+    - _Triplanar_Emission_Blend: 1
     - _Triplanar_Emission_Fade: 1
     - _Triplanar_Emission_Intensity: 1
+    - _Triplanar_Emission_Tiling: 0.25
     - _Triplanar_Emission_Top_To_Side_Difference: 0
     - _Triplanar_Fade: 1
     - _Triplanar_Intensity: 1
@@ -243,6 +251,7 @@ Material:
     - _Wave_Direction_Vector: {r: 0, g: 1, b: 0, a: 0}
     - _Wave_Noise_Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &4006702517842880259
 MonoBehaviour:
   m_ObjectHideFlags: 11

@@ -34,13 +34,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Triplanar_Snow_02
-  m_Shader: {fileID: -6465566751694194690, guid: 19e269a311c45cd4482cf0ac0e694503, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 19e269a311c45cd4482cf0ac0e694503,
+    type: 3}
   m_Parent: {fileID: 2100000, guid: af5e54748a72e29488017a5d83180d7b, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHATEST_ON
   - _OVERLAY_UV_CHANNEL_UV0
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHATEST_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -74,6 +75,8 @@ Material:
     - _Bottom_Smoothness: 0
     - _Cull: 2
     - _Enable_Base_Texture: 1
+    - _Enable_Snow: 1
     m_Colors:
     - _Triplanar_Normal_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

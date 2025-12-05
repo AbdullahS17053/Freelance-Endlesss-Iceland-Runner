@@ -21,14 +21,16 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Triplanar_Glacier_01
-  m_Shader: {fileID: -6465566751694194690, guid: 5808064c5204e554c89f589a7059c558, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 5808064c5204e554c89f589a7059c558,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ALPHAPREMULTIPLY_ON
-  - _SURFACE_TYPE_TRANSPARENT
+  - _BUILTIN_SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _ALPHABLEND_ON
+  - _ALPHAPREMULTIPLY_ON
+  - _SURFACE_TYPE_TRANSPARENT
   - _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -86,13 +88,13 @@ Material:
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
-    - _BUILTIN_DstBlend: 0
+    - _BUILTIN_DstBlend: 10
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_SrcBlend: 5
     - _BUILTIN_Surface: 1
     - _BUILTIN_ZTest: 4
-    - _BUILTIN_ZWrite: 0
+    - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 1
     - _Base_Metallic: 0.084
     - _Base_Normal_Intensity: -0.3
@@ -168,6 +170,7 @@ Material:
     - _Shallow_Color: {r: 0.16019936, g: 0.27248794, b: 0.4528302, a: 0}
     - _Top_Color_Multiplier: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &3225294784559328775
 MonoBehaviour:
   m_ObjectHideFlags: 11

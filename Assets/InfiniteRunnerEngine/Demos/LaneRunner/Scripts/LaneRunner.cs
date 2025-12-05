@@ -96,7 +96,11 @@ namespace MoreMountains.InfiniteRunnerEngine
 	            sqrRemainingDistance = (transform.position - destination).sqrMagnitude;
 	            yield return null;
 	        }
-	        _isMoving = false;
+            // Snap final position to whole-number Z
+            Vector3 snap = transform.position;
+            snap.z = Mathf.Round(snap.z);
+            transform.position = snap;
+            _isMoving = false;
 	    }
 	    
 	    /// <summary>
