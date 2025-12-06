@@ -4836,6 +4836,7 @@ GameObject:
   - component: {fileID: 54000012132678736}
   - component: {fileID: 114000013241566462}
   - component: {fileID: 114958508202248516}
+  - component: {fileID: 6609314513431325111}
   m_Layer: 0
   m_Name: BlockDude
   m_TagString: Player
@@ -4929,6 +4930,9 @@ MonoBehaviour:
   NumberOfLanes: 3
   ChangingLaneSpeed: 0.1
   Explosion: {fileID: 182584, guid: d73909079c835469fb56359bad91fb11, type: 3}
+  JumpForce: 25
+  Gravity: -25
+  SlideDuration: 0.6
 --- !u!114 &114958508202248516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4941,6 +4945,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eac7cbe197dc794dbaed99e0565d2de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &6609314513431325111
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000014088840652}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1692476874132092214
 GameObject:
   m_ObjectHideFlags: 0
