@@ -117,10 +117,12 @@ namespace MoreMountains.InfiniteRunnerEngine
 				// fade in
 				GUIManager.Instance.FaderOn(false,IntroFadeDuration);
 			}
-
-	        PrepareStart();
 		}
 		
+		public void StartGame()
+		{
+            PrepareStart();
+        }
 		/// <summary>
 		/// Handles everything before the actual start of the game.
 		/// </summary>
@@ -498,5 +500,18 @@ namespace MoreMountains.InfiniteRunnerEngine
 	    {
 	    	
 	    }
+
+		public virtual void GameEnded()
+		{
+
+            GameManager.Instance.SetStatus(GameManager.GameStatus.BeforeGameStart);
+            InstantiateCharacters();
+            Speed = InitialSpeed;
+        }
+
+		public virtual void ResetSpeed()
+		{
+			Speed = InitialSpeed;
+        }
 	}
 }

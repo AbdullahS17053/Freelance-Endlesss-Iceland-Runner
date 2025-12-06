@@ -3,117 +3,142 @@ using System.Collections;
 using MoreMountains.Tools;
 
 namespace MoreMountains.InfiniteRunnerEngine
-{	
-	/// <summary>
-	/// This is an example of how you can extend playable character, in this case to have a character that can switch lanes by moving left or right
-	/// </summary>
-	public class LaneRunner : PlayableCharacter 
-	{
-		[Space(10)]
-	    [Header("Lanes")]
-	    /// the width of each lane
-	    public float LaneWidth=3f;
-		/// the number of lanes the runner can run in
-	    public int NumberOfLanes = 3;
-		/// the speed (in seconds) at which the runner changes lane
-	    public float ChangingLaneSpeed = 1f;
-		/// the gameobject instantiated when the runner dies
-	    public GameObject Explosion;
-		
-	    protected int _currentLane;
-	    protected bool _isMoving = false;
+{
+    public class LaneRunner : PlayableCharacter
+    {
+        [Space(10)]
+        [Header("Lanes")]
+        public float LaneWidth = 3f;
+        public int NumberOfLanes = 3;
+        public float ChangingLaneSpeed = 1f;
+        public GameObject Explosion;
 
-	    /// <summary>
-	    /// On awake, we handle initialization
-	    /// </summary>
-	    protected override void Awake()
-	    {
-	        Initialize();
-	        // we initialize the current lane. We aim for the center lane.
-	        _currentLane = NumberOfLanes / 2;
-	        // if the number of lanes is odd (which is IMO the best setup), we add one to get the middle one.
-	        if (NumberOfLanes % 2 ==1 ) { _currentLane++;  }
-	    }
+        protected int _currentLane;
+        protected bool _isMoving = false;
 
-	    /// <summary>
-	    /// On update we handle the animator's update
-	    /// </summary>
-	    protected override void Update ()
-		{
-			
-			// we send our various states to the animator.      
-			UpdateAnimator ();
-			// we check if the player is out of the death bounds or not
-	        CheckDeathConditions ();
-	    }
+        [Header("Jump Settings")]
+        public float JumpHeight = 3f;     // Max jump height
+        public float JumpDuration = 0.5f; // Time to reach apex
 
-		/// <summary>
-		/// Triggered when the player presses left
-		/// </summary>
-	    public override void LeftStart()
-	    {                
-	        // if we're already on the left lane, we do nothing and exit
-	        if (_currentLane<=1) { return; }
-	        // if the lane runner is already moving we do nothing and exit
-	        if (_isMoving) { return; }
-	        // we move the lane runner to the left
-	        StartCoroutine(MoveTo(transform.position + Vector3.forward * LaneWidth, ChangingLaneSpeed));
-	        _currentLane--;
-	    }
+        private bool _isJumping = false;
+        private float _jumpStartY;
+        private float _jumpTime;
 
-		/// <summary>
-		/// Triggered when the player presses right
-		/// </summary>
-	    public override void RightStart()
-	    {
-	        // if we're already on the right lane, we do nothing and exit
-	        if (_currentLane == NumberOfLanes) { return; }
-	        // if the lane runner is already moving we do nothing and exit
-	        if (_isMoving) { return; }
-	        // we move the lane runner to the right
-	        StartCoroutine(MoveTo(transform.position - Vector3.forward * LaneWidth, ChangingLaneSpeed));
-	        _currentLane++;
-	    }
+        protected override void Awake()
+        {
+            Initialize();
+            _currentLane = NumberOfLanes / 2;
+            if (NumberOfLanes % 2 == 1) _currentLane++;
+            
+        }
+        private void Start()
+        {
+            transform.localPosition = new Vector3(-14f, transform.localPosition.y, transform.localPosition.z);
+        }
 
-		/// <summary>
-		/// Moves an object to a destination position in a determined time
-		/// </summary>
-		/// <returns>The to.</returns>
-		/// <param name="destination">Destination.</param>
-		/// <param name="movementDuration">Movement duration.</param>
-	    protected IEnumerator MoveTo(Vector3 destination,float movementDuration)
-	    {
-	    	// initialization
-	        float elapsedTime=0f;
-	        Vector3 initialPosition = transform.position;
-	        _isMoving = true;
+        protected override void Update()
+        {
+            if(transform.localPosition.x != -14f)
+            {
+                transform.localPosition = new Vector3(-14f, transform.localPosition.y, transform.localPosition.z);
+            }
 
-	        float sqrRemainingDistance = (transform.position - destination).sqrMagnitude;
-	        while (sqrRemainingDistance > float.Epsilon)
-	        {
-	            elapsedTime += Time.deltaTime;
-	            transform.position = Vector3.Lerp(initialPosition, destination, elapsedTime / movementDuration);
-	            sqrRemainingDistance = (transform.position - destination).sqrMagnitude;
-	            yield return null;
-	        }
-            // Snap final position to whole-number Z
-            Vector3 snap = transform.position;
-            snap.z = Mathf.Round(snap.z);
-            transform.position = snap;
+            UpdateAnimator();
+            CheckDeathConditions();
+            HandleJump();
+        }
+
+        public override void LeftStart()
+        {
+            if (_currentLane <= 1 || _isMoving) return;
+            _currentLane--;
+            StartCoroutine(MoveLaneToCurrentIndex());
+        }
+
+        public override void RightStart()
+        {
+            if (_currentLane >= NumberOfLanes || _isMoving) return;
+            _currentLane++;
+            StartCoroutine(MoveLaneToCurrentIndex());
+        }
+
+        private IEnumerator MoveLaneToCurrentIndex()
+        {
+            _isMoving = true;
+            float elapsedTime = 0f;
+            Vector3 startPos = transform.position;
+
+            // Calculate target Z from lane index
+            float middleLane = (NumberOfLanes + 1) / 2f; // e.g., 3 lanes -> middle = 2
+            float targetZ = (middleLane - _currentLane) * LaneWidth;
+
+            Vector3 destination = new Vector3(transform.position.x, transform.position.y, targetZ);
+
+            while (elapsedTime < ChangingLaneSpeed)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / ChangingLaneSpeed);
+
+                Vector3 pos = Vector3.Lerp(startPos, destination, t);
+                pos.y = transform.position.y; // preserve jump height
+                transform.position = pos;
+                yield return null;
+            }
+
+            // Snap exactly to lane
+            Vector3 finalPos = transform.position;
+            finalPos.z = targetZ;
+            transform.position = finalPos;
+
             _isMoving = false;
-	    }
-	    
-	    /// <summary>
-	    /// When the runner dies we instantiate an explosion at the point of impact
-	    /// </summary>
-		public override void Die()
-		{
-			if (Explosion != null)
-			{
-				GameObject explosion = (GameObject)Instantiate(Explosion);
-				explosion.transform.position = transform.GetComponent<BoxCollider>().bounds.center;
-			}
-			Destroy(gameObject);
-		}		
-	}
+        }
+
+
+        public override void UpStart()
+        {
+            if (!_isJumping)
+            {
+                _isJumping = true;
+                _jumpStartY = transform.position.y;
+                _jumpTime = 0f;
+            }
+        }
+
+        public override void UpEnd() { }
+        public override void UpOngoing() { }
+
+        private void HandleJump()
+        {
+            if (!_isJumping) return;
+
+            _jumpTime += Time.deltaTime;
+            float t = Mathf.Clamp01(_jumpTime / JumpDuration);
+
+            // Smooth parabola using sine
+            float newY = _jumpStartY + Mathf.Sin(Mathf.PI * t) * JumpHeight;
+
+            Vector3 pos = transform.position;
+            pos.y = newY;
+            transform.position = pos;
+
+            if (_jumpTime >= JumpDuration)
+            {
+                _isJumping = false;
+                _jumpTime = 0f;
+                pos.y = _jumpStartY; // land smoothly
+                transform.position = pos;
+            }
+        }
+
+        public override void Die()
+        {
+            if (Explosion != null)
+            {
+                GameObject explosion = Instantiate(Explosion);
+                explosion.transform.position = transform.GetComponent<BoxCollider>().bounds.center;
+            }
+            GameplayManager.instance.Crashed();
+            Destroy(gameObject);
+        }
+    }
 }

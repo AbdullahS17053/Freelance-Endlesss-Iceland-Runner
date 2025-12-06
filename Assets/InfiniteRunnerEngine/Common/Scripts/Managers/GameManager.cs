@@ -12,7 +12,7 @@ namespace MoreMountains.InfiniteRunnerEngine
 	{			
 		/// the number of lives the player gets (you lose a life when your character (or your characters all) die.
 		/// lose all lives you lose the game and your points.
-		public int TotalLives = 3;
+		public int TotalLives = 5000;
 	    /// The current number of lives
 	    public int CurrentLives { get; protected set;  }
 		/// the current number of game points

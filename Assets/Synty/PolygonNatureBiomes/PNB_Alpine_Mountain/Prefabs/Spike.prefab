@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2747523527788415088}
   - component: {fileID: 5149580546022159263}
   - component: {fileID: -7715824193147661635}
+  - component: {fileID: 4275927464693990164}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7706068851314558504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0bce0a8dd118a14bb804c28e9b44bd5, type: 3}
   m_Name: 
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7706068851314558504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89a8cfe26a3a99741ab5f196acf474a1, type: 3}
   m_Name: 
@@ -161,10 +162,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7706068851314558504}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72de0b0360096ea41a18d17864ecb963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BoundsBasedOn: 0
   LifeTime: 0
+--- !u!114 &4275927464693990164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7706068851314558504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31262e9e143bb694bb1f5d747f306503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DestroyX: -40

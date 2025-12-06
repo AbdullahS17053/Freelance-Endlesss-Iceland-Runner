@@ -4906,9 +4906,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &114000013241566462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4930,9 +4930,8 @@ MonoBehaviour:
   NumberOfLanes: 3
   ChangingLaneSpeed: 0.1
   Explosion: {fileID: 182584, guid: d73909079c835469fb56359bad91fb11, type: 3}
-  JumpForce: 25
-  Gravity: -25
-  SlideDuration: 0.6
+  JumpHeight: 4.5
+  JumpDuration: 0.5
 --- !u!114 &114958508202248516
 MonoBehaviour:
   m_ObjectHideFlags: 0
