@@ -1,0 +1,479 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1386792281475532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4145374437029442}
+  m_Layer: 0
+  m_Name: Boat_Snow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4145374437029442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386792281475532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4588913107421240}
+  - {fileID: 3109581742166672028}
+  - {fileID: 2390443942260577719}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1391659628827408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4535466237660628}
+  m_Layer: 0
+  m_Name: Boat(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4535466237660628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391659628827408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4575310594566898}
+  - {fileID: 4195644878066424}
+  m_Father: {fileID: 4588913107421240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1640276583670870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4575310594566898}
+  - component: {fileID: 33373786403285868}
+  - component: {fileID: 23672873296827862}
+  m_Layer: 0
+  m_Name: Boat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4575310594566898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640276583670870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4535466237660628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &33373786403285868
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640276583670870}
+  m_Mesh: {fileID: 4300000, guid: 5f1ba54fd2369804babd49d7382ac06e, type: 3}
+--- !u!23 &23672873296827862
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640276583670870}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5721313a776ef294097c1311cb9ed379, type: 2}
+  - {fileID: 2100000, guid: c67b3ffe5f1051e4ea1835ddf7b7a111, type: 2}
+  - {fileID: 2100000, guid: 5721313a776ef294097c1311cb9ed379, type: 2}
+  - {fileID: 2100000, guid: b3822810815a4024abeae5f4116d6a75, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1961718565401452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4195644878066424}
+  - component: {fileID: 33602755724534724}
+  - component: {fileID: 64502792567153428}
+  m_Layer: 0
+  m_Name: Boat_Colider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4195644878066424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961718565401452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4535466237660628}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &33602755724534724
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961718565401452}
+  m_Mesh: {fileID: 4300000, guid: eddf941172399fc46abe887c78d871fc, type: 3}
+--- !u!64 &64502792567153428
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961718565401452}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: eddf941172399fc46abe887c78d871fc, type: 3}
+--- !u!1 &1994232571098128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4588913107421240}
+  - component: {fileID: 205893985299024748}
+  m_Layer: 0
+  m_Name: Boat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4588913107421240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994232571098128}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4535466237660628}
+  - {fileID: 6542488903985251330}
+  m_Father: {fileID: 4145374437029442}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &205893985299024748
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994232571098128}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: -0.00058186054, y: 0.41717532, z: -0.028616905}
+  m_Size: 4.437831
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.04646513
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 23672873296827862}
+    - renderer: {fileID: 535603200156616062}
+  m_Enabled: 1
+--- !u!1 &6837921795905066318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6542488903985251330}
+  - component: {fileID: 7747970592255820527}
+  - component: {fileID: 535603200156616062}
+  m_Layer: 0
+  m_Name: Boat_Snow(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6542488903985251330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837921795905066318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4588913107421240}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7747970592255820527
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837921795905066318}
+  m_Mesh: {fileID: 2804457194026682842, guid: 39f7a58a9ea857441bbf6bd123041a4f, type: 3}
+--- !u!23 &535603200156616062
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6837921795905066318}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 442580118571c1848939792c9f2dc7d5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &2388012786479061237
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4145374437029442}
+    m_Modifications:
+    - target: {fileID: 1403968273789728, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_Name
+      value: Boat_Paddle (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.05319214
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8337295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.80911255
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6114862
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7023732
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.33348274
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.14678492
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -73.114
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 136.037
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -95.878
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+--- !u!4 &2390443942260577719 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+  m_PrefabInstance: {fileID: 2388012786479061237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3109745425773711326
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4145374437029442}
+    m_Modifications:
+    - target: {fileID: 1403968273789728, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_Name
+      value: Boat_Paddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.6925049
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7319124
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.80545044
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.858855
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.34390697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.11888386
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.36050352
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -42.567
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.406
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -46.867
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+--- !u!4 &3109581742166672028 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4359441478700354, guid: ac332734bd4db5c489c8f466281a5de4, type: 3}
+  m_PrefabInstance: {fileID: 3109745425773711326}
+  m_PrefabAsset: {fileID: 0}

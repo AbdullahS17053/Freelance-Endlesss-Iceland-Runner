@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 77ea40ae62ff96d4eb4941ea7903615f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280615
+  packageName: Fantasy Bundle - Low Poly Nature - Winter Pack
+  packageVersion: 1.0
+  assetPath: Assets/Poly Ninja/CameraCulling/CameraCulling/Runtime/CullingDistancesPlayer.asset
+  uploadId: 659348

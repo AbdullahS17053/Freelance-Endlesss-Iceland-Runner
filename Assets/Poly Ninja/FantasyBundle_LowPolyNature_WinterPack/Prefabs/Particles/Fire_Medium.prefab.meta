@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 90199518d64824a4c99757a0e25c75a8
+timeCreated: 1515872813
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280615
+  packageName: Fantasy Bundle - Low Poly Nature - Winter Pack
+  packageVersion: 1.0
+  assetPath: Assets/Poly Ninja/FantasyBundle_LowPolyNature_WinterPack/Prefabs/Particles/Fire_Medium.prefab
+  uploadId: 659348

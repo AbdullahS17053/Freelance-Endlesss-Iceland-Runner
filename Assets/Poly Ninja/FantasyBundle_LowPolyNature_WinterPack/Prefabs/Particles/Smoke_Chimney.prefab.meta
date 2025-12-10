@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 7a82422dbaf5bd9409d37d01ca25cf46
+timeCreated: 1515874940
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280615
+  packageName: Fantasy Bundle - Low Poly Nature - Winter Pack
+  packageVersion: 1.0
+  assetPath: Assets/Poly Ninja/FantasyBundle_LowPolyNature_WinterPack/Prefabs/Particles/Smoke_Chimney.prefab
+  uploadId: 659348

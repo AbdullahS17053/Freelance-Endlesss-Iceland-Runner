@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 27ab4e42df5edf34ea86b1dc30d8d48c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 280615
+  packageName: Fantasy Bundle - Low Poly Nature - Winter Pack
+  packageVersion: 1.0
+  assetPath: Assets/Poly Ninja/CameraCulling/CameraCulling/Runtime/CullingDistancesURP_SR_Daylight_Mobile.asset
+  uploadId: 659348

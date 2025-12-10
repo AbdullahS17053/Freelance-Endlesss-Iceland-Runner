@@ -1,0 +1,412 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04f4db383535d1b43b00b1c72633e3b4, type: 3}
+  m_Name: CullingDistances_WR_Storm
+  m_EditorClassIdentifier: 
+  lastEdited: 0
+  settings:
+  - quality: 3
+    layerCullDistances:
+    - layer: 0
+      distance: 4000
+      name: Default
+    - layer: 1
+      distance: 4000
+      name: TransparentFX
+    - layer: 2
+      distance: 4000
+      name: Ignore Raycast
+    - layer: 3
+      distance: 4000
+      name: Ground
+    - layer: 4
+      distance: 4000
+      name: Water
+    - layer: 5
+      distance: 4000
+      name: UI
+    - layer: 6
+      distance: 4000
+      name: Lights
+    - layer: 7
+      distance: 4000
+      name: 
+    - layer: 8
+      distance: 4000
+      name: 
+    - layer: 9
+      distance: 4000
+      name: 
+    - layer: 10
+      distance: 4000
+      name: 
+    - layer: 11
+      distance: 4000
+      name: 
+    - layer: 12
+      distance: 4000
+      name: 
+    - layer: 13
+      distance: 4000
+      name: 
+    - layer: 14
+      distance: 4000
+      name: 
+    - layer: 15
+      distance: 4000
+      name: 
+    - layer: 16
+      distance: 4000
+      name: 
+    - layer: 17
+      distance: 4000
+      name: 
+    - layer: 18
+      distance: 4000
+      name: 
+    - layer: 19
+      distance: 4000
+      name: 
+    - layer: 20
+      distance: 4000
+      name: 
+    - layer: 21
+      distance: 4000
+      name: 
+    - layer: 22
+      distance: 4000
+      name: 
+    - layer: 23
+      distance: 4000
+      name: 
+    - layer: 24
+      distance: 4000
+      name: 
+    - layer: 25
+      distance: 4000
+      name: 
+    - layer: 26
+      distance: 4000
+      name: 
+    - layer: 27
+      distance: 4000
+      name: 
+    - layer: 28
+      distance: 4000
+      name: 
+    - layer: 29
+      distance: 4000
+      name: 
+    - layer: 30
+      distance: 4000
+      name: 
+    - layer: 31
+      distance: 4000
+      name: 
+    lightDistance: 249
+  - quality: 2
+    layerCullDistances:
+    - layer: 0
+      distance: 1000
+      name: Default
+    - layer: 1
+      distance: 1000
+      name: TransparentFX
+    - layer: 2
+      distance: 1000
+      name: Ignore Raycast
+    - layer: 3
+      distance: 1000
+      name: Ground
+    - layer: 4
+      distance: 1000
+      name: Water
+    - layer: 5
+      distance: 1000
+      name: UI
+    - layer: 6
+      distance: 1000
+      name: Lights
+    - layer: 7
+      distance: 1000
+      name: 
+    - layer: 8
+      distance: 1000
+      name: 
+    - layer: 9
+      distance: 1000
+      name: 
+    - layer: 10
+      distance: 1000
+      name: 
+    - layer: 11
+      distance: 1000
+      name: 
+    - layer: 12
+      distance: 1000
+      name: 
+    - layer: 13
+      distance: 1000
+      name: 
+    - layer: 14
+      distance: 1000
+      name: 
+    - layer: 15
+      distance: 1000
+      name: 
+    - layer: 16
+      distance: 1000
+      name: 
+    - layer: 17
+      distance: 1000
+      name: 
+    - layer: 18
+      distance: 1000
+      name: 
+    - layer: 19
+      distance: 1000
+      name: 
+    - layer: 20
+      distance: 1000
+      name: 
+    - layer: 21
+      distance: 1000
+      name: 
+    - layer: 22
+      distance: 1000
+      name: 
+    - layer: 23
+      distance: 1000
+      name: 
+    - layer: 24
+      distance: 1000
+      name: 
+    - layer: 25
+      distance: 1000
+      name: 
+    - layer: 26
+      distance: 1000
+      name: 
+    - layer: 27
+      distance: 1000
+      name: 
+    - layer: 28
+      distance: 1000
+      name: 
+    - layer: 29
+      distance: 1000
+      name: 
+    - layer: 30
+      distance: 1000
+      name: 
+    - layer: 31
+      distance: 1000
+      name: 
+    lightDistance: 70
+  - quality: 1
+    layerCullDistances:
+    - layer: 0
+      distance: 700
+      name: Default
+    - layer: 1
+      distance: 700
+      name: TransparentFX
+    - layer: 2
+      distance: 700
+      name: Ignore Raycast
+    - layer: 3
+      distance: 700
+      name: Ground
+    - layer: 4
+      distance: 700
+      name: Water
+    - layer: 5
+      distance: 700
+      name: UI
+    - layer: 6
+      distance: 700
+      name: Lights
+    - layer: 7
+      distance: 700
+      name: 
+    - layer: 8
+      distance: 700
+      name: 
+    - layer: 9
+      distance: 700
+      name: 
+    - layer: 10
+      distance: 700
+      name: 
+    - layer: 11
+      distance: 700
+      name: 
+    - layer: 12
+      distance: 700
+      name: 
+    - layer: 13
+      distance: 700
+      name: 
+    - layer: 14
+      distance: 700
+      name: 
+    - layer: 15
+      distance: 700
+      name: 
+    - layer: 16
+      distance: 700
+      name: 
+    - layer: 17
+      distance: 700
+      name: 
+    - layer: 18
+      distance: 700
+      name: 
+    - layer: 19
+      distance: 700
+      name: 
+    - layer: 20
+      distance: 700
+      name: 
+    - layer: 21
+      distance: 700
+      name: 
+    - layer: 22
+      distance: 700
+      name: 
+    - layer: 23
+      distance: 700
+      name: 
+    - layer: 24
+      distance: 700
+      name: 
+    - layer: 25
+      distance: 700
+      name: 
+    - layer: 26
+      distance: 700
+      name: 
+    - layer: 27
+      distance: 700
+      name: 
+    - layer: 28
+      distance: 700
+      name: 
+    - layer: 29
+      distance: 700
+      name: 
+    - layer: 30
+      distance: 700
+      name: 
+    - layer: 31
+      distance: 700
+      name: 
+    lightDistance: 60
+  - quality: 0
+    layerCullDistances:
+    - layer: 0
+      distance: 500
+      name: Default
+    - layer: 1
+      distance: 500
+      name: TransparentFX
+    - layer: 2
+      distance: 500
+      name: Ignore Raycast
+    - layer: 3
+      distance: 500
+      name: Ground
+    - layer: 4
+      distance: 500
+      name: Water
+    - layer: 5
+      distance: 500
+      name: UI
+    - layer: 6
+      distance: 500
+      name: Lights
+    - layer: 7
+      distance: 500
+      name: 
+    - layer: 8
+      distance: 4000
+      name: 
+    - layer: 9
+      distance: 4000
+      name: 
+    - layer: 10
+      distance: 4000
+      name: 
+    - layer: 11
+      distance: 4000
+      name: 
+    - layer: 12
+      distance: 4000
+      name: 
+    - layer: 13
+      distance: 4000
+      name: 
+    - layer: 14
+      distance: 4000
+      name: 
+    - layer: 15
+      distance: 4000
+      name: 
+    - layer: 16
+      distance: 4000
+      name: 
+    - layer: 17
+      distance: 4000
+      name: 
+    - layer: 18
+      distance: 4000
+      name: 
+    - layer: 19
+      distance: 4000
+      name: 
+    - layer: 20
+      distance: 4000
+      name: 
+    - layer: 21
+      distance: 4000
+      name: 
+    - layer: 22
+      distance: 4000
+      name: 
+    - layer: 23
+      distance: 4000
+      name: 
+    - layer: 24
+      distance: 4000
+      name: 
+    - layer: 25
+      distance: 4000
+      name: 
+    - layer: 26
+      distance: 4000
+      name: 
+    - layer: 27
+      distance: 4000
+      name: 
+    - layer: 28
+      distance: 4000
+      name: 
+    - layer: 29
+      distance: 4000
+      name: 
+    - layer: 30
+      distance: 4000
+      name: 
+    - layer: 31
+      distance: 4000
+      name: 
+    lightDistance: 201
