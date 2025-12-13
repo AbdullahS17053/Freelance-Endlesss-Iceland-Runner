@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Albedo Stone1_0: 7699179342451619808
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

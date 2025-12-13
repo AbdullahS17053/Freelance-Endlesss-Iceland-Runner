@@ -12,10 +12,12 @@ public class CollectionItem : MonoBehaviour
             // Update score or coins
             if (coin)
             {
+                AudioManager.instance.PlayCoinCollect();
                 GameplayManager.instance.AddCoin();
             }
             else
             {
+                AudioManager.instance.PlayGemCollect();
                 GameplayManager.instance.AddGem();
             }
 
