@@ -24,6 +24,8 @@ namespace MoreMountains.InfiniteRunnerEngine
         private float _jumpStartY;
         private float _jumpTime;
 
+        private Animator _animator;
+
         protected override void Awake()
         {
             Initialize();
@@ -34,6 +36,7 @@ namespace MoreMountains.InfiniteRunnerEngine
         private void Start()
         {
             transform.localPosition = new Vector3(-14f, transform.localPosition.y, transform.localPosition.z);
+            _animator = GetComponentInChildren<Animator>();
         }
 
         protected override void Update()
@@ -98,6 +101,7 @@ namespace MoreMountains.InfiniteRunnerEngine
         {
             if (!_isJumping)
             {
+                _animator.SetTrigger("Jump");
                 _isJumping = true;
                 _jumpStartY = transform.position.y;
                 _jumpTime = 0f;

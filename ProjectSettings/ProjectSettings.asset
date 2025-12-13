@@ -143,7 +143,8 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.8
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: b74de0322a2574b42b59381c870de93a, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
