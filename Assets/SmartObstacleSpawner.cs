@@ -1,151 +1,128 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class SmartObstacleSpawner : MonoBehaviour
 {
-    // ======================================================
-    // GLOBAL
-    // ======================================================
     [Header("Global")]
     public bool EnableSpawning = true;
     public float SpawnX = 40f;
     public float[] LaneZ = { -3f, 0f, 3f };
 
     [Header("Ground Reference")]
-    public Transform Ground; // reference for correct Y position
+    public Transform Ground;
 
-    // ======================================================
-    // HEIGHT OFFSETS
-    // ======================================================
     [Header("Spawn Heights")]
     public float ObstacleYOffset = 0f;
     public float CoinYOffset = 1f;
     public float GemYOffset = 1.2f;
 
-    // ======================================================
-    // DIFFICULTY
-    // ======================================================
     [Header("Difficulty")]
     public float DifficultyIncreaseRate = 0.02f;
     public float MaxDifficulty = 3f;
 
-    // ======================================================
-    // OBSTACLES
-    // ======================================================
     [Header("Obstacles")]
     public GameObject[] ObstaclePrefabs;
     public Vector2 ObstacleDelay = new Vector2(1.8f, 3.2f);
 
-    // ======================================================
-    // COINS
-    // ======================================================
     [Header("Coins")]
     public GameObject CoinPrefab;
     public int CoinLineMin = 3;
     public int CoinLineMax = 6;
     public float CoinGapX = 1.5f;
 
-    // ======================================================
-    // GEMS
-    // ======================================================
     [Header("Gems")]
     public GameObject GemPrefab;
     [Range(0f, 1f)] public float GemChance = 0.12f;
     public Vector2 GemCooldown = new Vector2(10f, 18f);
 
-    // ======================================================
-    // PATTERNS
-    // ======================================================
     [Header("Patterns")]
     public bool EnablePatterns = true;
 
-    // ======================================================
-    // INTERNAL STATE
-    // ======================================================
+    // ==========================
+    // INTERNAL
+    // ==========================
     private class LaneState
     {
         public bool Busy;
-        public int RecentSpawns; // fairness tracking
+        public int RecentSpawns;
+        public float Timer;
+        public float NextDelay;
     }
 
     private LaneState[] _lanes;
     private float _difficulty = 1f;
     private bool _canSpawnGem = true;
 
-    // ======================================================
-    // UNITY START
-    // ======================================================
+    private Dictionary<GameObject, Queue<GameObject>> _pool = new Dictionary<GameObject, Queue<GameObject>>();
+    private Vector3 _spawnPosition = Vector3.zero;
+
     private void Start()
     {
         EnableSpawning = false;
 
+        // Initialize lanes
         _lanes = new LaneState[LaneZ.Length];
         for (int i = 0; i < LaneZ.Length; i++)
         {
-            _lanes[i] = new LaneState();
-            StartCoroutine(LaneLoop(i));
+            _lanes[i] = new LaneState
+            {
+                Timer = 0f,
+                NextDelay = Random.Range(ObstacleDelay.x, ObstacleDelay.y)
+            };
         }
-        StartCoroutine(DifficultyLoop());
     }
 
-    // ======================================================
-    // DIFFICULTY LOOP
-    // ======================================================
-    private IEnumerator DifficultyLoop()
+    private void Update()
     {
-        while (true)
+        if (EnableSpawning)
         {
-            _difficulty = Mathf.Min(_difficulty + DifficultyIncreaseRate, MaxDifficulty);
-            yield return new WaitForSeconds(1f);
+            // Difficulty increase
+            _difficulty = Mathf.Min(_difficulty + DifficultyIncreaseRate * Time.deltaTime, MaxDifficulty);
+
+            // Update each lane
+            for (int i = 0; i < _lanes.Length; i++)
+            {
+                LaneState lane = _lanes[i];
+                if (lane.Busy) continue;
+
+                lane.Timer += Time.deltaTime;
+                if (lane.Timer >= lane.NextDelay / _difficulty)
+                {
+                    TrySpawn(i);
+                    lane.Timer = 0f;
+                    lane.NextDelay = Random.Range(ObstacleDelay.x, ObstacleDelay.y);
+                }
+            }
         }
     }
 
-    // ======================================================
-    // LANE LOOP
-    // ======================================================
-    private IEnumerator LaneLoop(int lane)
-    {
-        while (true)
-        {
-            if (EnableSpawning && !_lanes[lane].Busy)
-                TrySpawn(lane);
-
-            float wait = Random.Range(ObstacleDelay.x, ObstacleDelay.y) / _difficulty;
-            yield return new WaitForSeconds(wait);
-        }
-    }
-
-    // ======================================================
-    // SPAWN DECISION
-    // ======================================================
     private void TrySpawn(int lane)
     {
-        if (WouldBlockAllLanes(lane))
-            return;
+        if (WouldBlockAllLanes(lane)) return;
 
-        // Lane fairness factor
         float fairness = Mathf.Clamp01(1f - _lanes[lane].RecentSpawns * 0.25f);
 
-        // Gem
+        // Spawn Gem
         if (_canSpawnGem && Random.value < (GemChance * fairness) / _difficulty)
         {
-            StartCoroutine(SpawnGem(lane));
+            SpawnGem(lane);
             return;
         }
 
-        // Pattern
+        // Spawn Pattern
         float patternChance = Mathf.Lerp(0.08f, 0.18f, _difficulty / MaxDifficulty);
         if (EnablePatterns && Random.value < patternChance * fairness)
         {
-            StartCoroutine(SpawnPattern());
+            SpawnPattern();
             return;
         }
 
         // Obstacle vs Coin
         if (Random.value < 0.6f)
-            StartCoroutine(SpawnObstacle(lane));
+            SpawnObstacle(lane);
         else
-            StartCoroutine(SpawnCoinLine(lane));
+            SpawnCoinLine(lane);
     }
 
     private bool WouldBlockAllLanes(int requestingLane)
@@ -156,27 +133,20 @@ public class SmartObstacleSpawner : MonoBehaviour
         return busyCount >= _lanes.Length - 1;
     }
 
-    // ======================================================
-    // SPAWN OBSTACLE
-    // ======================================================
-    private IEnumerator SpawnObstacle(int lane)
+    // ==========================
+    // SPAWN METHODS
+    // ==========================
+    private void SpawnObstacle(int lane)
     {
         LockLane(lane);
-
         GameObject prefab = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Length)];
         Spawn(prefab, lane, SpawnX, ObstacleYOffset);
-
-        yield return new WaitForSeconds(1.1f / _difficulty);
-        UnlockLane(lane);
+        StartCoroutine(UnlockAfterDelay(lane, 1.1f / _difficulty));
     }
 
-    // ======================================================
-    // SPAWN COIN LINE
-    // ======================================================
-    private IEnumerator SpawnCoinLine(int lane)
+    private void SpawnCoinLine(int lane)
     {
         LockLane(lane);
-
         int count = Random.Range(CoinLineMin, CoinLineMax + 1);
         float x = SpawnX;
 
@@ -184,58 +154,63 @@ public class SmartObstacleSpawner : MonoBehaviour
         {
             Spawn(CoinPrefab, lane, x, CoinYOffset);
             x += CoinGapX;
-            yield return new WaitForSeconds(0.05f);
         }
 
-        yield return new WaitForSeconds(0.9f);
-        UnlockLane(lane);
+        StartCoroutine(UnlockAfterDelay(lane, 0.9f));
     }
 
-    // ======================================================
-    // SPAWN GEM
-    // ======================================================
-    private IEnumerator SpawnGem(int lane)
+    private void SpawnGem(int lane)
     {
         _canSpawnGem = false;
         LockLane(lane);
-
         Spawn(GemPrefab, lane, SpawnX, GemYOffset);
+        StartCoroutine(GemCooldownRoutine(lane));
+    }
 
-        yield return new WaitForSeconds(Random.Range(GemCooldown.x, GemCooldown.y));
+    private void SpawnPattern()
+    {
+        int safeLane = GetFairestLane();
+        for (int i = 0; i < _lanes.Length; i++)
+        {
+            if (i == safeLane) continue;
+            LockLane(i);
+            GameObject prefab = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Length)];
+            Spawn(prefab, i, SpawnX, ObstacleYOffset);
+        }
+        StartCoroutine(PatternUnlockRoutine());
+    }
+
+    // ==========================
+    // COROUTINES
+    // ==========================
+    private IEnumerator UnlockAfterDelay(int lane, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UnlockLane(lane);
+    }
+
+    private IEnumerator GemCooldownRoutine(int lane)
+    {
+        float cooldown = Random.Range(GemCooldown.x, GemCooldown.y);
+        yield return new WaitForSeconds(cooldown);
         UnlockLane(lane);
         _canSpawnGem = true;
     }
 
-    // ======================================================
-    // SPAWN PATTERN (SAFE LANE)
-    // ======================================================
-    private IEnumerator SpawnPattern()
+    private IEnumerator PatternUnlockRoutine()
     {
-        int safeLane = GetFairestLane();
-
-        for (int i = 0; i < LaneZ.Length; i++)
-        {
-            if (i == safeLane) continue;
-            LockLane(i);
-
-            GameObject prefab = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Length)];
-            Spawn(prefab, i, SpawnX, ObstacleYOffset);
-        }
-
         yield return new WaitForSeconds(1.4f);
-
-        for (int i = 0; i < LaneZ.Length; i++)
+        for (int i = 0; i < _lanes.Length; i++)
             UnlockLane(i);
     }
 
-    // ======================================================
-    // LANE FAIRNESS
-    // ======================================================
+    // ==========================
+    // LANE MANAGEMENT
+    // ==========================
     private int GetFairestLane()
     {
         int best = 0;
         int lowest = int.MaxValue;
-
         for (int i = 0; i < _lanes.Length; i++)
         {
             if (_lanes[i].RecentSpawns < lowest)
@@ -259,25 +234,53 @@ public class SmartObstacleSpawner : MonoBehaviour
         _lanes[lane].RecentSpawns = Mathf.Max(0, _lanes[lane].RecentSpawns - 1);
     }
 
-    // ======================================================
-    // SPAWN HELPER (ANCHOR TO GROUND)
-    // ======================================================
+    // ==========================
+    // SPAWN HELPER WITH POOLING
+    // ==========================
     private void Spawn(GameObject prefab, int lane, float x, float yOffset)
     {
-        // Raycast downward from above the track
-        Vector3 rayOrigin = new Vector3(x, 50f, LaneZ[lane]); // start high above
-        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 100f))
+        GameObject obj = GetPooledObject(prefab);
+        if (obj == null)
         {
-            Vector3 pos = hit.point + new Vector3(0, yOffset, 0);
-            Instantiate(prefab, pos, prefab.transform.rotation);
+            obj = Instantiate(prefab);
+            AddToPool(prefab, obj);
         }
-        else
+
+        // Compute spawn position
+        _spawnPosition.Set(x, yOffset, LaneZ[lane]);
+
+        // Optional raycast for uneven ground
+        if (Ground != null)
         {
-            // fallback if raycast misses
-            Vector3 pos = new Vector3(x, yOffset, LaneZ[lane]);
-            Instantiate(prefab, pos, prefab.transform.rotation);
-            Debug.LogWarning("Spawn raycast missed ground at lane " + lane);
+            Vector3 rayOrigin = new Vector3(x, 50f, LaneZ[lane]);
+            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 100f))
+            {
+                _spawnPosition.y = hit.point.y + yOffset;
+            }
         }
+
+        obj.transform.position = _spawnPosition;
+        obj.transform.rotation = prefab.transform.rotation;
+        obj.SetActive(true);
     }
 
+    private GameObject GetPooledObject(GameObject prefab)
+    {
+        if (_pool.TryGetValue(prefab, out Queue<GameObject> queue) && queue.Count > 0)
+            return queue.Dequeue();
+        return null;
+    }
+
+    private void AddToPool(GameObject prefab, GameObject obj)
+    {
+        if (!_pool.ContainsKey(prefab))
+            _pool[prefab] = new Queue<GameObject>();
+    }
+
+    public void ReturnToPool(GameObject prefab, GameObject obj)
+    {
+        obj.SetActive(false);
+        if (!_pool.ContainsKey(prefab)) _pool[prefab] = new Queue<GameObject>();
+        _pool[prefab].Enqueue(obj);
+    }
 }

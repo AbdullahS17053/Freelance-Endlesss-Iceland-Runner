@@ -4834,10 +4834,9 @@ GameObject:
   - component: {fileID: 4000013296607044}
   - component: {fileID: 65000011012154002}
   - component: {fileID: 2315670262524665308}
-  - component: {fileID: 54000012132678736}
-  - component: {fileID: 114000013241566462}
-  - component: {fileID: 114958508202248516}
-  - component: {fileID: 6609314513431325111}
+  - component: {fileID: 6755424911172303821}
+  - component: {fileID: 7947478786248641984}
+  - component: {fileID: 7766610429924717507}
   m_Layer: 0
   m_Name: BlockDude
   m_TagString: Player
@@ -4907,7 +4906,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.55484915, z: 0.5443016}
   m_Center: {x: 0, y: 0.27742457, z: 0.000000059604645}
---- !u!54 &54000012132678736
+--- !u!54 &6755424911172303821
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4931,10 +4930,10 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 122
   m_CollisionDetection: 2
---- !u!114 &114000013241566462
+--- !u!114 &7947478786248641984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4943,26 +4942,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000014088840652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c1ca96b90647d6449f36881b99ccb9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 57d8fdb4e16fc944e96e03a36bb3b4a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseDefaultMecanim: 1
-  ShouldResetPosition: 0
-  ResetPositionSpeed: 0
-  GroundDistanceTolerance: 0.01
-  InitialInvincibilityDuration: 3
   LaneWidth: 3
   NumberOfLanes: 3
   ChangingLaneSpeed: 0.1
-  Explosion: {fileID: 182584, guid: d73909079c835469fb56359bad91fb11, type: 3}
   JumpHeight: 4
   JumpDuration: 0.5
   SlideDuration: 0.5
   SlideHeight: 0
-  SlideCollider: {fileID: 2315670262524665308}
   MainCollider: {fileID: 65000011012154002}
-  slideParticles: {fileID: 5551266856491340178}
---- !u!114 &114958508202248516
+  SlideCollider: {fileID: 2315670262524665308}
+  SlideParticles: {fileID: 5551266856491340178}
+  DeathEffect: {fileID: 198121459679799664, guid: 05f7c156786bd024e8da3bb1a4b8aa09,
+    type: 3}
+--- !u!114 &7766610429924717507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4971,21 +4966,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000014088840652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eac7cbe197dc794dbaed99e0565d2de, type: 3}
+  m_Script: {fileID: 11500000, guid: cf0a70330e6c95a4e9d48f6c378410ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!225 &6609314513431325111
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000014088840652}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  MinSwipeDistance: 80
+  Runner: {fileID: 7947478786248641984}
 --- !u!1 &1692476874132092214
 GameObject:
   m_ObjectHideFlags: 0
@@ -5331,6 +5316,11 @@ PrefabInstance:
     - target: {fileID: 4615518998488340, guid: 40290f336ccbb6644ac5ebf86b4522fe, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95266412242635172, guid: 40290f336ccbb6644ac5ebf86b4522fe,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 95266412242635172, guid: 40290f336ccbb6644ac5ebf86b4522fe,
         type: 3}

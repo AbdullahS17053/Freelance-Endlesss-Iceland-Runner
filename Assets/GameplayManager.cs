@@ -9,7 +9,7 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager instance;
 
-    public LevelManager levelManager;
+    public MyLevelManager levelManager;
 
     [Header("Menu UI")]
     public GameObject mainMenuPanel;
@@ -41,7 +41,6 @@ public class GameplayManager : MonoBehaviour
     public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI coinsTextG;
     public TextMeshProUGUI gemsTextG;
-    public MySpawner spawner;
     public SmartObstacleSpawner newMySpawner;
 
 
@@ -74,14 +73,12 @@ public class GameplayManager : MonoBehaviour
 
         AudioManager.instance.PlayGameplayTheme();
         levelManager.StartGame();
-        levelManager.ResetSpeed();
 
         mainMenuPanel.SetActive(false);
         top.SetActive(false);
         HubPanel.SetActive(true);
         inGame = true;
 
-        spawner.StartGame();
         newMySpawner.EnableSpawning = true;
         coinsTextG.text = inCoin.ToString();
         gemsTextG.text = inGem.ToString();
@@ -96,6 +93,7 @@ public class GameplayManager : MonoBehaviour
         CrashPanel.SetActive(true);
         HubPanel.SetActive(false);
         crashScoreText.text = currentScore.ToString();
+        levelManager.CrashLevel();
         inGame = false;
     }
 
@@ -113,7 +111,6 @@ public class GameplayManager : MonoBehaviour
     {
         newMySpawner.EnableSpawning = false;
         AudioManager.instance.PlayWin();
-        spawner.StopGame();
         CrashPanel.SetActive(false);
         gameOverPanel.SetActive(true);
 
@@ -144,7 +141,7 @@ public class GameplayManager : MonoBehaviour
         mainMenuPanel.SetActive(true);
         top.SetActive(true);
 
-        levelManager.GameEnded();
+        levelManager.EndGame();
 
         AudioManager.instance.PlayUITheme();
         EconomyManager.instance.GameFinishes(inCoin, inGem);

@@ -11,7 +11,9 @@
   <Project Path="MoreMountains.Feedbacks.URP.csproj" />
   <Project Path="MoreMountains.Feedbacks.PostProcessing.csproj" />
   <Project Path="MoreMountains.Feedbacks.Editor.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="MoreMountains.Tools.Feedbacks.csproj" />
   <Project Path="MoreMountains.Interface.Editor.csproj" />
   <Project Path="MoreMountains.Tools.Feedbacks.Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
 </Solution>

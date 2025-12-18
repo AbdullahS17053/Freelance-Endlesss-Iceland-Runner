@@ -11,17 +11,13 @@ GameObject:
   - component: {fileID: 2171312408044813002}
   - component: {fileID: 6827318424603105659}
   - component: {fileID: 3762704718431064743}
-  - component: {fileID: 6509764875319781337}
-  - component: {fileID: 9114536434630210522}
-  - component: {fileID: 5651956650037530715}
-  - component: {fileID: 3438947164948893175}
   - component: {fileID: 6343164615680886735}
   - component: {fileID: 2767364153710601223}
   - component: {fileID: 4711294399064196183}
-  - component: {fileID: 8052904044585331163}
+  - component: {fileID: 1369478619783318201}
   m_Layer: 0
   m_Name: SM_Prop_Fish_Rack_01
-  m_TagString: Untagged
+  m_TagString: Obs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,62 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6509764875319781337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6544216457788449513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4a6617bb2a239047a2242ac9b1cc531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 10
-  Acceleration: 0
-  Direction: {x: -1, y: 0, z: 0}
-  DirectionCanBeChangedBySpawner: 1
-  MovementSpace: 0
---- !u!114 &9114536434630210522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6544216457788449513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0bce0a8dd118a14bb804c28e9b44bd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5651956650037530715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6544216457788449513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72de0b0360096ea41a18d17864ecb963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoundsBasedOn: 2
-  LifeTime: 0
---- !u!114 &3438947164948893175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6544216457788449513}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89a8cfe26a3a99741ab5f196acf474a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestroyDistanceBehindBounds: 30
 --- !u!65 &6343164615680886735
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -213,7 +153,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.2258356, y: 0.86428666, z: 0.62738836}
   m_Center: {x: -0.025775434, y: 1.6400903, z: 0.1027205}
---- !u!114 &8052904044585331163
+--- !u!114 &1369478619783318201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,7 +162,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6544216457788449513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31262e9e143bb694bb1f5d747f306503, type: 3}
+  m_Script: {fileID: 11500000, guid: eae63480bad2e0643b1f282d22cb753d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DestroyX: -40
+  Speed: 5
+  Direction: {x: -1, y: 0, z: 0}
+  MovementSpace: 0
+  AutoDestroy: 1
+  DestroyXThreshold: -50
+  Lifetime: 60
