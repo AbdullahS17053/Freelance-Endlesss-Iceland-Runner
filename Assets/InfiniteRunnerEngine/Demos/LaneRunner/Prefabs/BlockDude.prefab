@@ -4947,7 +4947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LaneWidth: 3
   NumberOfLanes: 3
-  ChangingLaneSpeed: 0.1
+  LaneMoveSpeed: 25
   JumpHeight: 4
   JumpDuration: 0.5
   SlideDuration: 0.5
