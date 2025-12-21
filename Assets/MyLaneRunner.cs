@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(BoxCollider))]
 public class MyLaneRunner : MonoBehaviour
 {
-    [Header("Lane Settings")]
+    [Header("Lane")]
     public float LaneWidth = 3f;
     public int NumberOfLanes = 3;
-    public float LaneMoveSpeed = 12f; // units/sec (fast & smooth)
+    public float LaneMoveSpeed = 12f;
 
     [Header("Jump")]
     public float JumpHeight = 3f;
@@ -19,18 +20,21 @@ public class MyLaneRunner : MonoBehaviour
     public BoxCollider SlideCollider;
     public ParticleSystem SlideParticles;
 
-    [Header("Death")]
+    [Header("Death / Invincibility")]
     public ParticleSystem DeathEffect;
+    public float RespawnInvincibility = 2f;   // seconds of invincibility after respawn
+    public Renderer[] RenderersToBlink;      // assign child renderers for blinking
 
-    private int _laneIndex;           // 0,1,2
+    private int _laneIndex = 1;
     private float _targetZ;
 
     private bool _isJumping;
     private bool _isSliding;
+    private bool _isInvincible;
     private float _actionTime;
-    private float _actionStartY;
 
     private Animator _animator;
+    private Vector3 _pos;
 
     private const float LOCKED_X = -18.5f;
     private const float BASE_Y = -3.1f;
@@ -38,23 +42,44 @@ public class MyLaneRunner : MonoBehaviour
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
-
-        _laneIndex = 1; // middle lane
         _targetZ = LaneToZ(_laneIndex);
 
-        Vector3 pos = transform.position;
-        pos.x = LOCKED_X;
-        pos.y = BASE_Y;
-        pos.z = _targetZ;
-        transform.position = pos;
+        _pos = transform.position;
+        _pos.x = LOCKED_X;
+        _pos.y = BASE_Y;
+        _pos.z = _targetZ;
+        transform.position = _pos;
 
         MainCollider.enabled = true;
         SlideCollider.enabled = false;
     }
 
+    private void OnEnable()
+    {
+        // Start invisible and invincible at game start
+        if (RespawnInvincibility > 0f)
+        {
+            StartCoroutine(InvincibilityCoroutine(RespawnInvincibility));
+        }
+    }
+
+    private void Update()
+    {
+        MoveLane();
+        HandleAction();
+
+        transform.position = _pos;
+    }
+
     // ======================================================
-    // INPUT → ONLY CHANGE INDEX
+    // LANE MOVEMENT
     // ======================================================
+    private void MoveLane()
+    {
+        _pos.x = LOCKED_X;
+        _pos.z = Mathf.MoveTowards(_pos.z, _targetZ, LaneMoveSpeed * Time.deltaTime);
+    }
+
     public void MoveLeft()
     {
         _laneIndex = Mathf.Clamp(_laneIndex + 1, 0, NumberOfLanes - 1);
@@ -68,82 +93,42 @@ public class MyLaneRunner : MonoBehaviour
     }
 
     // ======================================================
-    // FIXEDUPDATE → MOVEMENT ONLY
+    // ACTIONS
     // ======================================================
-    private void FixedUpdate()
-    {
-        // Lock X
-        Vector3 pos = transform.position;
-        pos.x = LOCKED_X;
-
-        // Smooth Z movement (never stops mid-lane)
-        pos.z = Mathf.MoveTowards(
-            pos.z,
-            _targetZ,
-            LaneMoveSpeed * Time.fixedDeltaTime
-        );
-
-        transform.position = pos;
-    }
-
-    // ======================================================
-    // UPDATE → JUMP & SLIDE
-    // ======================================================
-    private void Update()
-    {
-        HandleAction();
-    }
-
     private void HandleAction()
     {
         if (_isJumping)
         {
             _actionTime += Time.deltaTime;
             float t = _actionTime / JumpDuration;
-
-            float y = BASE_Y + Mathf.Sin(Mathf.PI * t) * JumpHeight;
-            SetY(y);
+            _pos.y = BASE_Y + (1f - (2f * t - 1f) * (2f * t - 1f)) * JumpHeight;
 
             if (t >= 1f)
             {
                 _isJumping = false;
-                SetY(BASE_Y);
+                _pos.y = BASE_Y;
             }
         }
         else if (_isSliding)
         {
             _actionTime += Time.deltaTime;
             float t = _actionTime / SlideDuration;
-
-            float y = Mathf.Lerp(transform.position.y, BASE_Y - SlideHeight, t);
-            SetY(y);
+            _pos.y = Mathf.Lerp(_pos.y, BASE_Y - SlideHeight, t);
 
             if (t >= 1f)
                 EndSlide();
         }
     }
 
-    private void SetY(float y)
-    {
-        Vector3 pos = transform.position;
-        pos.y = y;
-        transform.position = pos;
-    }
-
-    // ======================================================
-    // ACTIONS
-    // ======================================================
     public void Jump()
     {
         if (_isJumping) return;
 
-        if (_isSliding)
-            EndSlide();
-
+        EndSlide();
         _isJumping = true;
         _actionTime = 0f;
 
-        MainCollider.enabled = true;
+        MainCollider.enabled = !_isInvincible;
         SlideCollider.enabled = false;
 
         _animator?.SetTrigger("Jump");
@@ -153,15 +138,12 @@ public class MyLaneRunner : MonoBehaviour
     {
         if (_isSliding) return;
 
-        if (_isJumping)
-            _isJumping = false;
-
+        _isJumping = false;
         _isSliding = true;
         _actionTime = 0f;
 
         SlideParticles?.Play();
-
-        SlideCollider.enabled = true;
+        SlideCollider.enabled = !_isInvincible;
         MainCollider.enabled = false;
 
         _animator?.SetTrigger("Slide");
@@ -169,35 +151,79 @@ public class MyLaneRunner : MonoBehaviour
 
     private void EndSlide()
     {
+        if (!_isSliding) return;
+
         _isSliding = false;
-        _actionTime = 0f;
-
         SlideParticles?.Stop();
+
         SlideCollider.enabled = false;
-        MainCollider.enabled = true;
-
-        SetY(BASE_Y);
+        MainCollider.enabled = !_isInvincible;
+        _pos.y = BASE_Y;
     }
 
-    // ======================================================
-    // HELPERS
-    // ======================================================
-    private float LaneToZ(int lane)
-    {
-        return (lane - 1) * LaneWidth;
-    }
+    private float LaneToZ(int lane) => (lane - 1) * LaneWidth;
 
-    // ======================================================
-    // DEATH
-    // ======================================================
     private void OnTriggerEnter(Collider other)
     {
+        if (_isInvincible) return;  // fully ignore collisions
         if (!other.CompareTag("Obs")) return;
 
-        if (DeathEffect)
-            Instantiate(DeathEffect, transform.position, Quaternion.identity);
-
+        DeathEffect?.Play();
         GameplayManager.instance?.Crashed();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    // ======================================================
+    // RESPAWN / INVINCIBILITY
+    // ======================================================
+    public void Respawn()
+    {
+        /*
+        transform.position = spawnPosition;
+        _pos = spawnPosition;
+
+        gameObject.SetActive(true);
+        */
+
+        // Start temporary invincibility
+        if (RespawnInvincibility > 0f)
+            StartCoroutine(InvincibilityCoroutine(RespawnInvincibility));
+    }
+
+    private IEnumerator InvincibilityCoroutine(float duration)
+    {
+
+
+        _isInvincible = true;
+
+        // Disable colliders fully during invincibility
+        MainCollider.enabled = false;
+        SlideCollider.enabled = false;
+
+        float blinkInterval = 0.1f;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            if (RenderersToBlink != null)
+            {
+                foreach (var r in RenderersToBlink)
+                    r.enabled = !r.enabled;
+            }
+
+            yield return new WaitForSeconds(blinkInterval);
+            timer += blinkInterval;
+        }
+
+        // Re-enable colliders and renderers
+        MainCollider.enabled = true;
+        SlideCollider.enabled = false; // default
+        if (RenderersToBlink != null)
+        {
+            foreach (var r in RenderersToBlink)
+                r.enabled = true;
+        }
+
+        _isInvincible = false;
     }
 }

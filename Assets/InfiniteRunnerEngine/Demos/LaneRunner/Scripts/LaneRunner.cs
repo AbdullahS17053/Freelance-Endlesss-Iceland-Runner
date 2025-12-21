@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using MoreMountains.Tools;
 
 namespace MoreMountains.InfiniteRunnerEngine
@@ -9,226 +8,190 @@ namespace MoreMountains.InfiniteRunnerEngine
         [Header("Lanes")]
         public float LaneWidth = 3f;
         public int NumberOfLanes = 3;
-        public float ChangingLaneSpeed = 1f;
-        public GameObject Explosion;
+        public float ChangingLaneSpeed = 10f;
 
-        protected int _currentLane;
-        protected bool _isMoving = false;
+        [Header("Position Lock")]
+        public float LockedX = -14f;
 
-        [Header("Jump Settings")]
+        [Header("Jump")]
         public float JumpHeight = 3f;
         public float JumpDuration = 0.5f;
 
-        [Header("Slide Settings")]
+        [Header("Slide")]
         public float SlideDuration = 0.5f;
         public float SlideHeight = 0.5f;
         public BoxCollider SlideCollider;
         public BoxCollider MainCollider;
         public ParticleSystem slideParticles;
 
-        private bool _isJumping = false;
-        private bool _isSliding = false;
+        [Header("VFX")]
+        public GameObject Explosion;
 
-        private float _actionStartY;    // Base Y for current action
-        private float _actionTime;      // Time elapsed in current action
-        private float _actionDuration;  // Duration of current action
+        private Transform _tr;
+        private Animator _anim;
 
+        private int _currentLane;
+        private float _targetZ;
 
-        private Animator _animator;
+        private bool _jumping;
+        private bool _sliding;
+
+        private float _actionTime;
+        private float _groundY;
+
+        #region Init
 
         protected override void Awake()
         {
             Initialize();
+            _tr = transform;
+            _anim = GetComponentInChildren<Animator>();
 
             _currentLane = NumberOfLanes / 2;
-            if (NumberOfLanes % 2 == 1)
-            {
-                _currentLane++;
-            }
         }
 
         private void Start()
         {
-            transform.localPosition = new Vector3(-14f, transform.localPosition.y, transform.localPosition.z);
-            _animator = GetComponentInChildren<Animator>();
+            Vector3 pos = _tr.localPosition;
+            pos.x = LockedX;
+            _tr.localPosition = pos;
 
-            _actionStartY = -3.27f;
+            _groundY = pos.y;
+            UpdateTargetZ();
+
+            SlideCollider.enabled = false;
+            MainCollider.enabled = true;
         }
+
+        #endregion
 
         protected override void Update()
         {
-            // Lock X position
-            if (transform.localPosition.x != -14f)
-            {
-                transform.localPosition = new Vector3(-14f, transform.localPosition.y, transform.localPosition.z);
-            }
-
+            UpdateLaneMovement();
+            UpdateVerticalAction();
             UpdateAnimator();
             CheckDeathConditions();
-
-            HandleAction(); // Smooth jump & slide
         }
 
-        #region Lane Movement
+        #region Lane Movement (NO Coroutine)
+
+        private void UpdateLaneMovement()
+        {
+            Vector3 pos = _tr.localPosition;
+
+            pos.z = Mathf.MoveTowards(
+                pos.z,
+                _targetZ,
+                ChangingLaneSpeed * Time.deltaTime
+            );
+
+            pos.x = LockedX;
+            _tr.localPosition = pos;
+        }
+
+        private void UpdateTargetZ()
+        {
+            float middle = (NumberOfLanes - 1) * 0.5f;
+            _targetZ = (middle - _currentLane) * LaneWidth;
+        }
 
         public override void LeftStart()
         {
-            if (_currentLane <= 1 || _isMoving) return;
+            if (_currentLane <= 0) return;
             _currentLane--;
-            StartCoroutine(MoveLaneToCurrentIndex());
+            UpdateTargetZ();
         }
 
         public override void RightStart()
         {
-            if (_currentLane >= NumberOfLanes || _isMoving) return;
+            if (_currentLane >= NumberOfLanes - 1) return;
             _currentLane++;
-            StartCoroutine(MoveLaneToCurrentIndex());
-        }
-
-        private IEnumerator MoveLaneToCurrentIndex()
-        {
-            _isMoving = true;
-
-            float elapsedTime = 0f;
-            Vector3 startPos = transform.position;
-            float middleLane = (NumberOfLanes + 1) / 2f;
-            float targetZ = (middleLane - _currentLane) * LaneWidth;
-            Vector3 destination = new Vector3(transform.position.x, transform.position.y, targetZ);
-
-            while (elapsedTime < ChangingLaneSpeed)
-            {
-                elapsedTime += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsedTime / ChangingLaneSpeed);
-
-                Vector3 pos = Vector3.Lerp(startPos, destination, t);
-                pos.y = transform.position.y; // preserve current Y
-                transform.position = pos;
-
-                yield return null;
-            }
-
-            Vector3 finalPos = transform.position;
-            finalPos.z = targetZ;
-            transform.position = finalPos;
-
-            _isMoving = false;
+            UpdateTargetZ();
         }
 
         #endregion
 
-        #region Jump & Slide
+        #region Jump & Slide (No state spam)
 
-        private void HandleAction()
+        private void UpdateVerticalAction()
         {
-            if (_isJumping)
-            {
-                _actionTime += Time.deltaTime;
-                float t = Mathf.Clamp01(_actionTime / _actionDuration);
+            if (!_jumping && !_sliding) return;
 
-                // Jump follows a sine curve
-                float targetY = _actionStartY + Mathf.Sin(Mathf.PI * t) * JumpHeight;
-                Vector3 pos = transform.position;
-                pos.y = targetY;
-                transform.position = pos;
+            _actionTime += Time.deltaTime;
+            float t = Mathf.Clamp01(_actionTime / (_jumping ? JumpDuration : SlideDuration));
 
-                if (_actionTime >= _actionDuration)
-                {
-                    EndJump();
-                }
-            }
-            else if (_isSliding)
-            {
-                _actionTime += Time.deltaTime;
-                float t = Mathf.Clamp01(_actionTime / _actionDuration);
+            float y;
 
-                float targetY = _actionStartY - SlideHeight;
-                Vector3 pos = transform.position;
-                pos.y = Mathf.Lerp(pos.y, targetY, t); // smooth linear slide
-                transform.position = pos;
+            if (_jumping)
+                y = _groundY + Mathf.Sin(t * Mathf.PI) * JumpHeight;
+            else
+                y = Mathf.Lerp(_groundY, _groundY - SlideHeight, t);
 
-                if (_actionTime >= _actionDuration)
-                {
-                    EndSlide();
-                }
-            }
+            Vector3 pos = _tr.localPosition;
+            pos.y = y;
+            _tr.localPosition = pos;
+
+            if (t >= 1f)
+                EndAction();
         }
 
         public override void UpStart()
         {
-            if (_isJumping) return;
+            if (_jumping) return;
 
-            if (_isSliding) EndSlide(); // Cancel slide
-
-
-
-            _actionStartY = transform.position.y;
-            _actionTime = 0f;
-            _actionDuration = JumpDuration;
-            _isJumping = true;
-
-            MainCollider.enabled = true;
-            SlideCollider.enabled = false;
-
-            _animator.SetTrigger("Jump");
+            StartAction(true);
+            _anim.SetTrigger("Jump");
         }
 
         public override void DownStart()
         {
-            if (_isSliding) return;
+            if (_sliding) return;
 
-            if (_isJumping) EndJump(); // Cancel jump
-
-
-            slideParticles.Play();
-            //_actionStartY = transform.position.y;
-            _actionTime = 0f;
-            _actionDuration = SlideDuration;
-            _isSliding = true;
-
-            SlideCollider.enabled = true;
-            MainCollider.enabled = false;
-
-            _animator.SetTrigger("Slide");
+            StartAction(false);
+            slideParticles?.Play();
+            _anim.SetTrigger("Slide");
         }
 
-        private void EndJump()
+        private void StartAction(bool jump)
         {
-            
-            _isJumping = false;
+            _jumping = jump;
+            _sliding = !jump;
             _actionTime = 0f;
-            // Keep current Y for smooth transition to slide
+
+            SlideCollider.enabled = !jump;
+            MainCollider.enabled = jump;
         }
 
-        private void EndSlide()
+        private void EndAction()
         {
-
-
-            slideParticles.Stop();
-            _isSliding = false;
+            _jumping = false;
+            _sliding = false;
             _actionTime = 0f;
+
+            slideParticles?.Stop();
 
             SlideCollider.enabled = false;
             MainCollider.enabled = true;
-            // Keep current Y for smooth transition to jump
-        }
 
-        public override void UpEnd() { }
-        public override void UpOngoing() { }
+            Vector3 pos = _tr.localPosition;
+            pos.y = _groundY;
+            _tr.localPosition = pos;
+        }
 
         #endregion
 
-        #region Death
+        #region Death (NO Destroy)
 
         public override void Die()
         {
             if (Explosion != null)
             {
-                GameObject explosion = Instantiate(Explosion);
-                explosion.transform.position = GetComponent<BoxCollider>().bounds.center;
+                Explosion.transform.position = MainCollider.bounds.center;
+                Explosion.SetActive(true);
             }
 
             GameplayManager.instance.Crashed();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         #endregion

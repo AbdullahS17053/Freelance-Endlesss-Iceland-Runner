@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SmartObstacleSpawner : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class SmartObstacleSpawner : MonoBehaviour
 
     [Header("Patterns")]
     public bool EnablePatterns = true;
+    private List<MyMovingObject> _activePatternObjects = new List<MyMovingObject>();
 
     // ==========================
     // INTERNAL
@@ -142,6 +144,8 @@ public class SmartObstacleSpawner : MonoBehaviour
         GameObject prefab = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Length)];
         Spawn(prefab, lane, SpawnX, ObstacleYOffset);
         StartCoroutine(UnlockAfterDelay(lane, 1.1f / _difficulty));
+
+
     }
 
     private void SpawnCoinLine(int lane)
@@ -237,6 +241,9 @@ public class SmartObstacleSpawner : MonoBehaviour
     // ==========================
     // SPAWN HELPER WITH POOLING
     // ==========================
+    // ==========================
+    // SPAWN HELPER WITH POOLING
+    // ==========================
     private void Spawn(GameObject prefab, int lane, float x, float yOffset)
     {
         GameObject obj = GetPooledObject(prefab);
@@ -246,23 +253,40 @@ public class SmartObstacleSpawner : MonoBehaviour
             AddToPool(prefab, obj);
         }
 
-        // Compute spawn position
+        // Use fixed Y position from inspector
         _spawnPosition.Set(x, yOffset, LaneZ[lane]);
-
-        // Optional raycast for uneven ground
-        if (Ground != null)
-        {
-            Vector3 rayOrigin = new Vector3(x, 50f, LaneZ[lane]);
-            if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 100f))
-            {
-                _spawnPosition.y = hit.point.y + yOffset;
-            }
-        }
 
         obj.transform.position = _spawnPosition;
         obj.transform.rotation = prefab.transform.rotation;
         obj.SetActive(true);
+
+        _activePatternObjects.Add(obj.GetComponent<MyMovingObject>());
     }
+
+    public void StartStopObjects(bool stop)
+    {
+        for (int i = _activePatternObjects.Count - 1; i >= 0; i--)
+        {
+            if (_activePatternObjects[i] == null)
+            {
+                _activePatternObjects.RemoveAt(i);
+            }
+            else
+            {
+                _activePatternObjects[i].enabled = !stop;
+            }
+
+        }
+    }
+    public void ClearObstacles()
+    {
+        for (int i = _activePatternObjects.Count - 1; i >= 0; i--)
+        {
+            Destroy(_activePatternObjects[i].gameObject);
+            _activePatternObjects.RemoveAt(i);
+        }
+    }
+
 
     private GameObject GetPooledObject(GameObject prefab)
     {

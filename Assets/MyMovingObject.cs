@@ -1,8 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Add this class to an object and it will move according to its speed and acceleration.
-/// Can move in world or local space, and can optionally destroy itself when off-screen or after a time.
+/// Optimized moving object for WebGL/mobile.
+/// Moves according to speed and direction, can auto-destroy offscreen or after a lifetime.
 /// </summary>
 public class MyMovingObject : MonoBehaviour
 {
@@ -14,45 +14,44 @@ public class MyMovingObject : MonoBehaviour
     [Header("Behaviour")]
     public bool AutoDestroy = true;                // Destroy when off-screen
     public float DestroyXThreshold = -50f;         // X position to destroy object
-    public float Lifetime = 60f;                    // Optional self-destroy after time (0 = disabled)
+    public float Lifetime = 60f;                   // Optional self-destroy after time (0 = disabled)
 
+    // Cached values
+    private Vector3 _normalizedDirection;
     private float _currentLifetime;
+    private bool _lifetimeEnabled;
 
     private void OnEnable()
     {
         _currentLifetime = 0f;
-        Speed = MyLevelManager.Instance._tileMoveSpeed;
+
+        // Cache normalized direction to avoid recalculation every frame
+        _normalizedDirection = Direction.normalized;
+
+        // Update speed from level manager if available
+        if (MyLevelManager.Instance != null)
+            Speed = MyLevelManager.Instance.CurrentTileSpeed;
+
+        _lifetimeEnabled = Lifetime > 0f;
     }
 
     private void Update()
     {
-        Move();
-        CheckDestroy();
-    }
-
-    /// <summary>
-    /// Moves the object according to speed and direction.
-    /// </summary>
-    private void Move()
-    {
-        Vector3 movement = Direction.normalized * Speed * Time.deltaTime;
+        // Move object
+        Vector3 movement = _normalizedDirection * Speed * Time.deltaTime;
         transform.Translate(movement, MovementSpace);
-    }
 
-    /// <summary>
-    /// Check if object should be destroyed.
-    /// </summary>
-    private void CheckDestroy()
-    {
-        // Lifetime destroy
-        if (Lifetime > 0f)
+        // Check destruction conditions
+        if (_lifetimeEnabled)
         {
             _currentLifetime += Time.deltaTime;
             if (_currentLifetime >= Lifetime)
+            {
                 Destroy(gameObject);
+                return; // early exit
+            }
         }
 
-        // Offscreen destroy (X-axis)
         if (AutoDestroy && transform.position.x <= DestroyXThreshold)
         {
             Destroy(gameObject);

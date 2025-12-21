@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class MyLevelManager : MonoBehaviour
@@ -12,15 +11,25 @@ public class MyLevelManager : MonoBehaviour
 
     [Header("Environment Tiles")]
     public GameObject[] EnvironmentTiles;
-    public float _lockedZ = 0f;            // Y-axis is height, Z is fixed
-    public float _tileMoveSpeed = 5f;
-    public float _tileSpeedIncrease = 0.05f;
+    public float lockedZ = 0f;
+    public float baseTileSpeed = 5f;
+    public float tileSpeedIncreasePerSecond = 0.05f;
+    public float tileWidth = 135f;
 
     [Header("Obstacle Spawner")]
     public SmartObstacleSpawner spawner;
 
-    private float _originalTileSpeed;
-    private bool _gameStarted = false;
+    private float _currentTileSpeed;
+    private bool _gameStarted;
+    public float CurrentTileSpeed => _obstacleSpeeds;
+    private float _obstacleSpeeds;
+
+    // Cached
+    private Transform[] _tileTransforms;
+    private int _rightMostTileIndex;
+    private float _elapsedGameTime;
+
+    #region Unity Lifecycle
 
     private void Awake()
     {
@@ -31,66 +40,119 @@ public class MyLevelManager : MonoBehaviour
         }
 
         Instance = this;
-        _originalTileSpeed = _tileMoveSpeed;
+
+        // WebGL mobile FPS lock
+        Application.targetFrameRate = 60;
+
+        CacheTiles();
     }
 
-    private void Start()
+    private void Update()
     {
-        /*
-        StartGame();
-        */
+        if (!_gameStarted) return;
+
+        MoveTiles();
+        UpdateSpeed();
     }
 
-    private void FixedUpdate()
-    {
+    #endregion
 
-        // Move tiles along X
-        foreach (var tile in EnvironmentTiles)
+    #region Tile System (Optimized)
+
+    private void CacheTiles()
+    {
+        _tileTransforms = new Transform[EnvironmentTiles.Length];
+
+        for (int i = 0; i < EnvironmentTiles.Length; i++)
         {
-            if (tile != null)
-            {
-                tile.transform.Translate(Vector3.left * _tileMoveSpeed * Time.fixedDeltaTime);
-
-                if (tile.transform.position.x < -135) // recycle when passed left
-                    RecycleTile(tile);
-            }
+            _tileTransforms[i] = EnvironmentTiles[i].transform;
+            _tileTransforms[i].position = new Vector3(i * tileWidth, _tileTransforms[i].position.y, lockedZ);
         }
 
-        if (!_gameStarted) return;
-        // Gradually increase tile speed
-        _tileMoveSpeed += _tileSpeedIncrease * Time.fixedDeltaTime;
+        _rightMostTileIndex = EnvironmentTiles.Length - 1;
     }
 
-    private void RecycleTile(GameObject tile)
+    private void MoveTiles()
     {
-        // Find the rightmost tile
-        float maxX = float.MinValue;
-        foreach (var t in EnvironmentTiles)
-            if (t != tile)
-                maxX = Mathf.Max(maxX, t.transform.position.x);
+        float move = _currentTileSpeed * Time.deltaTime;
 
-        Vector3 pos = tile.transform.position;
-        pos.x = maxX + 135; // adjust based on tile width
-        pos.z = _lockedZ;
-        tile.transform.position = pos;
+        for (int i = 0; i < _tileTransforms.Length; i++)
+        {
+            Transform t = _tileTransforms[i];
+            Vector3 pos = t.position;
+            pos.x -= move;
+            t.position = pos;
+
+            if (pos.x < -tileWidth)
+            {
+                RecycleTile(i);
+            }
+        }
     }
 
-    #region Player Management
+    private void RecycleTile(int tileIndex)
+    {
+        Transform tile = _tileTransforms[tileIndex];
+        Transform rightMost = _tileTransforms[_rightMostTileIndex];
 
-    private void SpawnPlayer()
+        tile.position = new Vector3(
+            rightMost.position.x + tileWidth,
+            tile.position.y,
+            lockedZ
+        );
+
+        _rightMostTileIndex = tileIndex;
+    }
+
+    private void UpdateSpeed()
+    {
+        _elapsedGameTime += Time.deltaTime;
+        _currentTileSpeed = baseTileSpeed + (_elapsedGameTime * tileSpeedIncreasePerSecond);
+
+        if (!_gameStarted)
+        {
+            _obstacleSpeeds = 0;
+        }
+        else
+        {
+            _obstacleSpeeds = _currentTileSpeed;
+        }
+
+    }
+
+    #endregion
+
+    #region Player Management (No GC)
+
+    private void SpawnOrResetPlayer()
+    {
+        if (_playerInstance == null)
+        {
+            _playerInstance = Instantiate(playerPrefab);
+        }
+        _playerInstance.transform.position = spawnPoint.position;
+        _playerInstance.SetActive(true);
+    }
+
+    private void DisablePlayer()
     {
         if (_playerInstance != null)
-            Destroy(_playerInstance);
-
-        _playerInstance = Instantiate(playerPrefab, spawnPoint.position, Quaternion.identity);
+            _playerInstance.SetActive(false);
     }
+
+    #endregion
+
+    #region Game Flow
 
     public void StartGame()
     {
         _gameStarted = true;
-        _tileMoveSpeed = _originalTileSpeed;
+        _obstacleSpeeds = _currentTileSpeed;
+        _elapsedGameTime = 0f;
+        _currentTileSpeed = baseTileSpeed;
 
-        SpawnPlayer();
+        SpawnOrResetPlayer();
+        spawner.StartStopObjects(false);
 
         if (spawner != null)
             spawner.EnableSpawning = true;
@@ -99,51 +161,46 @@ public class MyLevelManager : MonoBehaviour
     public void ResetLevel()
     {
         _gameStarted = false;
+        _obstacleSpeeds = _currentTileSpeed;
 
-        // Reset environment tiles
-        for (int i = 0; i < EnvironmentTiles.Length; i++)
+        for (int i = 0; i < _tileTransforms.Length; i++)
         {
-            if (EnvironmentTiles[i] != null)
-            {
-                EnvironmentTiles[i].transform.position = new Vector3(
-                    i * 136.4f,                 // X
-                    EnvironmentTiles[i].transform.position.y,
-                    _lockedZ
-                );
-            }
+            _tileTransforms[i].position = new Vector3(
+                i * tileWidth,
+                _tileTransforms[i].position.y,
+                lockedZ
+            );
         }
 
-        // Reset spawner
+        _rightMostTileIndex = _tileTransforms.Length - 1;
+
         if (spawner != null)
-        {
             spawner.EnableSpawning = false;
-        }
 
-        SpawnPlayer();
-        _gameStarted = true;
-
-        if (spawner != null)
-            spawner.EnableSpawning = true;
+        StartGame();
     }
 
     public void CrashLevel()
     {
+        _obstacleSpeeds = 0;
         _gameStarted = false;
 
         if (spawner != null)
             spawner.EnableSpawning = false;
 
-        if (_playerInstance != null)
-            Destroy(_playerInstance);
+        DisablePlayer();
+        spawner.StartStopObjects(true);
     }
 
     public void EndGame()
     {
         _gameStarted = false;
-        _tileMoveSpeed = _originalTileSpeed;
+        _currentTileSpeed = baseTileSpeed;
 
         if (spawner != null)
             spawner.EnableSpawning = false;
+
+        spawner.ClearObstacles();
     }
 
     #endregion

@@ -1,62 +1,113 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/// <summary>
+/// Swipe input detection for WebGL/mobile.
+/// Supports left/right/up/down gestures with proper mobile responsiveness.
+/// </summary>
 public class SwipeInputCallbacks : MonoBehaviour
 {
     [Header("Swipe Settings")]
-    public float MinSwipeDistance = 80f;
+    [Range(0f, 0.5f)]
+    public float MinSwipePercent = 0.1f; // Minimum swipe distance as % of screen height
 
-    [Header("Target")]
+    [Header("References")]
     public MyLaneRunner Runner;
 
     private Vector2 _startPos;
-    private Vector2 _endPos;
-    private bool _isDragging;
+    private bool _dragging;
+    private float _minSwipeDistance;
+
+    private void Start()
+    {
+        // Scale swipe distance to screen size
+        _minSwipeDistance = Screen.height * MinSwipePercent;
+    }
 
     private void Update()
     {
-        // --------------------------
-        // Mouse input
-        // --------------------------
-        if (Mouse.current != null)
-        {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                _startPos = Mouse.current.position.ReadValue();
-                _isDragging = true;
-            }
-            else if (Mouse.current.leftButton.wasReleasedThisFrame && _isDragging)
-            {
-                _endPos = Mouse.current.position.ReadValue();
-                _isDragging = false;
-                DetectSwipe();
-            }
-        }
+#if UNITY_EDITOR || UNITY_STANDALONE
+        HandleMouseSwipe();
+#else
+        HandleTouchSwipe();
+#endif
+    }
 
-        // --------------------------
-        // Touch input
-        // --------------------------
-        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+    // -------------------------------
+    // Editor / Standalone (mouse)
+    // -------------------------------
+    private void HandleMouseSwipe()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            if (!_isDragging)
-            {
-                _startPos = Touchscreen.current.primaryTouch.position.ReadValue();
-                _isDragging = true;
-            }
-            _endPos = Touchscreen.current.primaryTouch.position.ReadValue();
+            _startPos = Input.mousePosition;
+            _dragging = true;
         }
-        else if (_isDragging && Touchscreen.current != null)
+        else if (Input.GetMouseButtonUp(0) && _dragging)
         {
-            _isDragging = false;
-            DetectSwipe();
+            _dragging = false;
+            DetectSwipe((Vector2)Input.mousePosition);
         }
     }
 
-    private void DetectSwipe()
+    // -------------------------------
+    // Mobile touch input
+    // -------------------------------
+    private void HandleTouchSwipe()
     {
-        Vector2 swipe = _endPos - _startPos;
-        if (swipe.sqrMagnitude < MinSwipeDistance * MinSwipeDistance) return;
+        if (Input.touchCount == 0) return;
 
+        Touch touch = Input.GetTouch(0);
+
+        switch (touch.phase)
+        {
+            case TouchPhase.Began:
+                _startPos = touch.position;
+                _dragging = true;
+                break;
+
+            case TouchPhase.Moved:
+                // Optional: detect swipe during drag
+                if (_dragging)
+                    DetectSwipeDuringDrag(touch.position);
+                break;
+
+            case TouchPhase.Ended:
+            case TouchPhase.Canceled:
+                if (_dragging)
+                {
+                    _dragging = false;
+                    DetectSwipe(touch.position);
+                }
+                break;
+        }
+    }
+
+    // -------------------------------
+    // Swipe detection
+    // -------------------------------
+    private void DetectSwipe(Vector2 endPos)
+    {
+        Vector2 swipe = endPos - _startPos;
+
+        if (swipe.sqrMagnitude < _minSwipeDistance * _minSwipeDistance)
+            return;
+
+        ProcessSwipeDirection(swipe);
+    }
+
+    private void DetectSwipeDuringDrag(Vector2 currentPos)
+    {
+        Vector2 swipe = currentPos - _startPos;
+
+        if (swipe.sqrMagnitude < _minSwipeDistance * _minSwipeDistance)
+            return;
+
+        _dragging = false; // Consume swipe
+        ProcessSwipeDirection(swipe);
+    }
+
+    private void ProcessSwipeDirection(Vector2 swipe)
+    {
         if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
         {
             if (swipe.x > 0) Runner.MoveRight();
