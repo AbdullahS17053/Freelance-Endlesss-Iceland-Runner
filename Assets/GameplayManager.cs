@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MoreMountains.InfiniteRunnerEngine;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +18,21 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Gameplay UI")]
     public GameObject HubPanel;
-    public GameObject Timer;
+
+
+    [Header("Timer UI")]
+    public GameObject TimerPanel;
+    public GameObject TimerIntro;
+    public GameObject TimerAurora;
+    public TextMeshProUGUI TimerTimeText;
+    public TextMeshProUGUI TimerTimeMulti;
+    public int TimerBonusMultiplayer;
+    public Vector2 TimerTime;
+    public Vector2 TimerSpawn;
+    private float timerRemaining;
+    private bool timerActive;
+
+    #region
 
     [Header("Crashed UI")]
     public GameObject CrashPanel;
@@ -36,6 +51,7 @@ public class GameplayManager : MonoBehaviour
     public bool inGame;
     public int currentScore = 0;
     public int scoreMultiplier = 1;
+    public int scoreMultiplierBoaster = 1;
     public int highScore = 0;
     public int lasScore = 0;
     public TextMeshProUGUI currentScoreText;
@@ -51,18 +67,20 @@ public class GameplayManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        timerRemaining = Random.Range(TimerSpawn.x, TimerSpawn.y);
     }
 
     private void Start()
     {
         AudioManager.instance.PlayUITheme();
+        TimerTimeMulti.text = TimerBonusMultiplayer.ToString() + "X";
     }
 
     private void Update()
     {
         if (inGame)
         {
-            currentScore += Mathf.RoundToInt(10 * scoreMultiplier * Time.deltaTime);
+            currentScore += Mathf.RoundToInt(10 * scoreMultiplier * scoreMultiplierBoaster * Time.deltaTime);
             currentScoreText.text = currentScore.ToString();
         }
     }
@@ -121,6 +139,7 @@ public class GameplayManager : MonoBehaviour
 
     public void GameFinished()
     {
+        StopTimerBooster();
         lasScore = currentScore;
 
         if (currentScore > highScore)
@@ -168,6 +187,100 @@ public class GameplayManager : MonoBehaviour
         inGem++;
         gemsTextG.text = inGem.ToString();
     }
+
+    #endregion
+
+    private void FixedUpdate()
+    {
+        if (!inGame) return;
+
+        timerRemaining -= Time.fixedDeltaTime;
+        Debug.Log(timerRemaining);
+
+
+        if (timerRemaining <= 0f)
+        {
+            if (!timerActive)
+            {
+                StartTimerBooster();
+            }
+            else
+            {
+                StopTimerBooster();
+            }
+        }
+
+        if (!inGame || !timerActive) return;
+
+        TimerTimeText.text = Mathf.CeilToInt(timerRemaining) + "s";
+    }
+
+
+
+    public void StartTimerBooster()
+    {
+        timerActive = true;
+
+        timerRemaining = Random.Range(TimerTime.x, TimerTime.y);
+
+        TimerPanel.SetActive(true);
+        TimerIntro.SetActive(true);
+        TimerAurora.SetActive(true);
+
+        scoreMultiplierBoaster = TimerBonusMultiplayer;
+
+        PlayTimerIntro();
+    }
+
+
+    private void StopTimerBooster()
+    {
+        timerActive = false;
+
+        timerRemaining = Random.Range(TimerSpawn.x, TimerSpawn.y);
+
+        TimerPanel.SetActive(false);
+        TimerIntro.SetActive(false);
+        TimerAurora.SetActive(false);
+
+        scoreMultiplierBoaster = 1;
+    }
+
+
+    public void PlayTimerIntro()
+    {
+        RectTransform rt = TimerIntro.GetComponent<RectTransform>();
+
+        // Kill previous tweens (important if reused)
+        rt.DOKill();
+
+        // Start position (left off-screen)
+        rt.anchoredPosition = new Vector2(-1000f, rt.anchoredPosition.y);
+
+
+        // Create sequence
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(
+            rt.DOAnchorPosX(0f, 0.4f)
+            .SetRelative(true)
+              .SetEase(Ease.OutQuad)
+        );
+
+        seq.AppendInterval(0.6f); // stay in center
+
+        seq.Append(
+            rt.DOAnchorPosX(1000f, 0.4f)
+            .SetRelative(true)
+              .SetEase(Ease.InQuad)
+        );
+
+        seq.OnComplete(() =>
+        {
+            TimerIntro.SetActive(false); // optional
+        });
+    }
+
     private void ResetGame()
     {
         currentScore = 0;

@@ -14,10 +14,12 @@ Material:
   m_ValidKeywords:
   - CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE
   - _EMISSION
+  - _GLOSSYREFLECTIONS_OFF
+  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords:
   - CURVEDWORLD_BEND_ID_1
   m_LightmapFlags: 0
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
@@ -44,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 74466b6d26c89d54e824d0039b5c9dd5, type: 3}
+        m_Texture: {fileID: 2800000, guid: ecd9f8edada3ad74ab0d1fc7a2ae82ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -72,19 +74,19 @@ Material:
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
-    - _GlossyReflections: 1
+    - _GlossyReflections: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CurvedWorldBendSettings: {r: 0, g: 1, b: 0, a: 0}
-    - _EmissionColor: {r: 3.4639766, g: 3.4639766, b: 3.4639766, a: 1}
+    - _EmissionColor: {r: 8.24319, g: 8.24319, b: 8.24319, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

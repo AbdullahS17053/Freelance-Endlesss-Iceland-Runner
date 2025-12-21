@@ -32,7 +32,7 @@ public class MyLaneRunner : MonoBehaviour
 
     private Animator _animator;
 
-    private const float LOCKED_X = -20f;
+    private const float LOCKED_X = -18.5f;
     private const float BASE_Y = -3.1f;
 
     private void Awake()

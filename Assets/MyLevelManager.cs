@@ -51,7 +51,7 @@ public class MyLevelManager : MonoBehaviour
             {
                 tile.transform.Translate(Vector3.left * _tileMoveSpeed * Time.fixedDeltaTime);
 
-                if (tile.transform.position.x < -136.4f) // recycle when passed left
+                if (tile.transform.position.x < -135) // recycle when passed left
                     RecycleTile(tile);
             }
         }
@@ -70,7 +70,7 @@ public class MyLevelManager : MonoBehaviour
                 maxX = Mathf.Max(maxX, t.transform.position.x);
 
         Vector3 pos = tile.transform.position;
-        pos.x = maxX + 136.4f; // adjust based on tile width
+        pos.x = maxX + 135; // adjust based on tile width
         pos.z = _lockedZ;
         tile.transform.position = pos;
     }
