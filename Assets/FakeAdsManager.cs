@@ -80,12 +80,10 @@ public class FakeAdsManager : MonoBehaviour
         _showingAd = true;
         _lastInterstitialTime = Time.unscaledTime;
 
-        Time.timeScale = 0f;
         OnInterstitialStarted?.Invoke();
 
         yield return new WaitForSecondsRealtime(InterstitialDuration);
 
-        Time.timeScale = 1f;
         _showingAd = false;
 
         OnInterstitialFinished?.Invoke();

@@ -325,6 +325,7 @@ public class GameplayManager : MonoBehaviour
     private void ResetGame()
     {
         revives = 3;
+        revivesText.text = revives.ToString();
         currentScore = 0;
         inCoin = 0;
         inGem = 0;
