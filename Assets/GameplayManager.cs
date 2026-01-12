@@ -179,7 +179,8 @@ public class GameplayManager : MonoBehaviour
 
     public void AddCoin()
     {
-        inCoin++;   
+        inCoin += scoreMultiplierBoaster; 
+        
         coinsTextG.text = inCoin.ToString();
     }
     public void AddGem()
