@@ -16,6 +16,7 @@ public class EconomyManager : MonoBehaviour
     public GameObject confirmPanel;
     public TextMeshProUGUI confirmItemText;
 
+    public GameObject gameplayAdButton;
     public GameObject adButton;
 
     [Header("Ad-Free")]
@@ -31,8 +32,28 @@ public class EconomyManager : MonoBehaviour
 
     void Start()
     {
+        LoadEconomyData();
+        LoadAdFree();
+
+
         UpdateUI();
         CloseConfirmPanel();
+    }
+
+    private void LoadEconomyData()
+    {
+        coins = MySaveLoadManager.Instance.Coins;
+        gems = MySaveLoadManager.Instance.Gems;
+    }
+    private void LoadAdFree()
+    {
+        isAdFree = MySaveLoadManager.Instance.AdsRemoved;
+
+        if (isAdFree)
+        {
+            adButton.SetActive(true);
+            gameplayAdButton.SetActive(false);
+        }
     }
 
     public void GameFinishes(int c, int g)
@@ -100,17 +121,21 @@ public class EconomyManager : MonoBehaviour
             UpdateUI();
             CloseConfirmPanel();
         }
+
+        FakeAdsManager.Instance.ShowInterstitial();
     }
 
     public void BuyAds(ItemData _coinNgems)
     {
+
         isAdFree = true;
         adButton.SetActive(true);
+        gameplayAdButton.SetActive(false);
 
         AddCoins(_coinNgems.amount);
         AddGems(Mathf.RoundToInt(_coinNgems.price));
 
-
+        MySaveLoadManager.Instance.SetAdsRemoved(true);
         UpdateUI();
     }
 
@@ -118,12 +143,14 @@ public class EconomyManager : MonoBehaviour
     public void AddCoins(int amount)
     {
         coins += amount;
+        MySaveLoadManager.Instance.AddCoins(coins);
         UpdateUI();
     }
 
     public void AddGems(int amount)
     {
         gems += amount;
+        MySaveLoadManager.Instance.AddGems(gems);
         UpdateUI();
     }
 }

@@ -51,12 +51,14 @@ public class GameplayManager : MonoBehaviour
 
 
     [Header("Gameplay Variables")]
+    public int revives = 3;
     public bool inGame;
     public int currentScore = 0;
     public int scoreMultiplier = 1;
     public int scoreMultiplierBoaster = 1;
     public int highScore = 0;
     public int lasScore = 0;
+    public TextMeshProUGUI revivesText;
     public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI coinsTextG;
     public TextMeshProUGUI gemsTextG;
@@ -77,6 +79,28 @@ public class GameplayManager : MonoBehaviour
     {
         AudioManager.instance.PlayUITheme();
         TimerTimeMulti.text = TimerBonusMultiplayer.ToString() + "X";
+
+        LoadScore();
+    }
+
+    private void LoadScore()
+    {
+        currentScore = MySaveLoadManager.Instance.BestScore;
+
+        lasScore = currentScore;
+
+        if (currentScore > highScore)
+        {
+            // new high score
+            highScore = currentScore;
+
+            foreach (LeaderData me in leaderMe)
+            {
+                me.updateScore(highScore);
+            }
+
+            RearrangeLeaders();
+        }
     }
 
     private void Update()
@@ -123,6 +147,12 @@ public class GameplayManager : MonoBehaviour
 
     public void Revive()
     {
+        if (revives == 0) return;
+
+        FakeAdsManager.Instance.ShowRewarded();
+        revives--;
+        revivesText.text = revives.ToString();
+
         AudioManager.instance.PlayRevive();
         CrashPanel.SetActive(false);
         HubPanel.SetActive(true);
@@ -159,6 +189,8 @@ public class GameplayManager : MonoBehaviour
             }
 
             RearrangeLeaders();
+
+            MySaveLoadManager.Instance.SaveBestScore(highScore);
         }
 
         HubPanel.SetActive(false);
@@ -181,7 +213,6 @@ public class GameplayManager : MonoBehaviour
             leaders[i].transform.SetSiblingIndex(i);
         }
     }
-
 
     public void AddCoin()
     {
@@ -293,6 +324,7 @@ public class GameplayManager : MonoBehaviour
 
     private void ResetGame()
     {
+        revives = 3;
         currentScore = 0;
         inCoin = 0;
         inGem = 0;
