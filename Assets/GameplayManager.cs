@@ -1,3 +1,4 @@
+using AssetKits.ParticleImage;
 using DG.Tweening;
 using MoreMountains.InfiniteRunnerEngine;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ public class GameplayManager : MonoBehaviour
     public TextMeshProUGUI gemsText;
     public int inCoin;
     public int inGem;
+    public ParticleImage coinParticle;
+    public ParticleImage gemParticle;
 
 
     [Header("Gameplay Variables")]
@@ -100,6 +103,9 @@ public class GameplayManager : MonoBehaviour
         newMySpawner.EnableSpawning = true;
         coinsTextG.text = inCoin.ToString();
         gemsTextG.text = inGem.ToString();
+
+        coinParticle.emitterConstraintTransform = levelManager._playerInstance.transform;
+        gemParticle.emitterConstraintTransform = levelManager._playerInstance.transform;
     }
 
 
@@ -179,13 +185,16 @@ public class GameplayManager : MonoBehaviour
 
     public void AddCoin()
     {
-        inCoin += scoreMultiplierBoaster; 
-        
+        inCoin += scoreMultiplierBoaster;
+        coinParticle.DOPlay();
+
+
         coinsTextG.text = inCoin.ToString();
     }
     public void AddGem()
     {
         inGem++;
+        gemParticle.DOPlay();
         gemsTextG.text = inGem.ToString();
     }
 

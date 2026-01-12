@@ -7,8 +7,10 @@
   <Project Path="MoreMountains.Interface.csproj" />
   <Project Path="MoreMountains.Feedbacks.MMTools.csproj" />
   <Project Path="MoreMountains.Feedbacks.NiceVibrations.csproj" />
+  <Project Path="ParticleImage.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="MoreMountains.Feedbacks.URP.csproj" />
+  <Project Path="ParticleImage.Editor.csproj" />
   <Project Path="MoreMountains.Feedbacks.PostProcessing.csproj" />
   <Project Path="MoreMountains.Feedbacks.Editor.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />

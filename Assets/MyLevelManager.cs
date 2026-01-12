@@ -7,7 +7,7 @@ public class MyLevelManager : MonoBehaviour
     [Header("Player Settings")]
     public Transform spawnPoint;
     public GameObject playerPrefab;
-    private GameObject _playerInstance;
+    public GameObject _playerInstance;
 
     [Header("Environment Tiles")]
     public GameObject[] EnvironmentTiles;

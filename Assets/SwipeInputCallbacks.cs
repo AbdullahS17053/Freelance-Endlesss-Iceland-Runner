@@ -25,7 +25,7 @@ public class SwipeInputCallbacks : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL
         HandleMouseSwipe();
 #else
         HandleTouchSwipe();
