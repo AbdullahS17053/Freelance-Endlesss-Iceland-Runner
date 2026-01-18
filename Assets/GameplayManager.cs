@@ -237,11 +237,10 @@ public class GameplayManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!inGame) return;
+        if (!inGame && !timerActive) return;
 
 
         timerRemaining -= Time.fixedDeltaTime;
-        Debug.Log(timerRemaining);
 
 
         if (timerRemaining <= 0f)
@@ -273,6 +272,7 @@ public class GameplayManager : MonoBehaviour
         TimerPanel.SetActive(true);
         TimerIntro.SetActive(true);
         TimerAurora.SetActive(true);
+        Debug.Log("Timer Started");
 
         scoreMultiplierBoaster = TimerBonusMultiplayer;
 
@@ -291,6 +291,7 @@ public class GameplayManager : MonoBehaviour
         TimerIntro.SetActive(false);
         TimerAurora.SetActive(false);
         TimerAurora1.SetActive(false);
+        Debug.Log("Timer End");
 
         scoreMultiplierBoaster = 1;
     }

@@ -25,6 +25,14 @@ public class CollectionItem : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if (coin)
+        {
+            GameplayManager.instance.OnTimerActiveChanged -= OnTimerChanged;
+        }
+    }
+
     void OnTimerChanged(bool timerActive)
     {
         coinRenderer.sharedMaterial =
