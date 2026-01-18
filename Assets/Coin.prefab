@@ -107,6 +107,9 @@ MonoBehaviour:
   coin: 1
   collectionParticle: {fileID: 198825929368372608, guid: edf12e91890b8434eb8ea701f9bc40a2,
     type: 3}
+  CoinYellowMat: {fileID: 2100000, guid: bf1598166b44b2c4ca0cce72426c4811, type: 2}
+  CoinSilverMat: {fileID: 2100000, guid: f77f1bad9d8c7254ca5e33e18a345f61, type: 2}
+  coinRenderer: {fileID: 8353528624387028503}
 --- !u!65 &6998755645801844290
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae63480bad2e0643b1f282d22cb753d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectionItem: {fileID: 1164778927869181018}
   Speed: 5
   Direction: {x: -1, y: 0, z: 0}
   MovementSpace: 0

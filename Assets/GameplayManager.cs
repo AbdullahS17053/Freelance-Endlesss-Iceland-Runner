@@ -1,11 +1,13 @@
 using AssetKits.ParticleImage;
 using DG.Tweening;
 using MoreMountains.InfiniteRunnerEngine;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.SocialPlatforms.Impl;
+using Random = UnityEngine.Random;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -25,13 +27,15 @@ public class GameplayManager : MonoBehaviour
     public GameObject TimerPanel;
     public GameObject TimerIntro;
     public GameObject TimerAurora;
+    public GameObject TimerAurora1;
     public TextMeshProUGUI TimerTimeText;
     public TextMeshProUGUI TimerTimeMulti;
     public int TimerBonusMultiplayer;
     public Vector2 TimerTime;
     public Vector2 TimerSpawn;
     private float timerRemaining;
-    private bool timerActive;
+    public bool timerActive;
+    public event Action<bool> OnTimerActiveChanged;
 
     #region
 
@@ -235,6 +239,7 @@ public class GameplayManager : MonoBehaviour
     {
         if (!inGame) return;
 
+
         timerRemaining -= Time.fixedDeltaTime;
         Debug.Log(timerRemaining);
 
@@ -243,7 +248,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (!timerActive)
             {
-                StartTimerBooster();
+                // StartTimerBooster();
             }
             else
             {
@@ -261,6 +266,7 @@ public class GameplayManager : MonoBehaviour
     public void StartTimerBooster()
     {
         timerActive = true;
+        OnTimerActiveChanged?.Invoke(timerActive);
 
         timerRemaining = Random.Range(TimerTime.x, TimerTime.y);
 
@@ -277,14 +283,29 @@ public class GameplayManager : MonoBehaviour
     private void StopTimerBooster()
     {
         timerActive = false;
+        OnTimerActiveChanged?.Invoke(timerActive);
 
         timerRemaining = Random.Range(TimerSpawn.x, TimerSpawn.y);
 
         TimerPanel.SetActive(false);
         TimerIntro.SetActive(false);
         TimerAurora.SetActive(false);
+        TimerAurora1.SetActive(false);
 
         scoreMultiplierBoaster = 1;
+    }
+    public void AddTimer()
+    {
+        if (timerActive)
+        {
+            timerRemaining += Random.Range(TimerTime.x, TimerTime.y);
+
+            TimerAurora1.SetActive(true);
+        }
+        else
+        {
+            StartTimerBooster();
+        }
     }
 
 

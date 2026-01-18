@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class MyMovingObject : MonoBehaviour
 {
+    public CollectionItem collectionItem;
+
     [Header("Movement Settings")]
     public float Speed = 5f;                       // Base speed
     public Vector3 Direction = Vector3.left;       // Movement direction
@@ -47,14 +49,28 @@ public class MyMovingObject : MonoBehaviour
             _currentLifetime += Time.deltaTime;
             if (_currentLifetime >= Lifetime)
             {
-                Destroy(gameObject);
+                if (collectionItem != null && collectionItem.coin)
+                {
+                    collectionItem.destroyCoin();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
                 return; // early exit
             }
         }
 
         if (AutoDestroy && transform.position.x <= DestroyXThreshold)
         {
-            Destroy(gameObject);
+            if (collectionItem != null && collectionItem.coin)
+            {
+                collectionItem.destroyCoin();
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

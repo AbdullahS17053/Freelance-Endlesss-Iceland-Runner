@@ -67,8 +67,66 @@ public class MyLaneRunner : MonoBehaviour
     {
         MoveLane();
         HandleAction();
+        // LEFT
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            OnLeft();
+        }
+
+        // RIGHT
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            OnRight();
+        }
+
+        // UP
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            OnUp();
+        }
+
+        // DOWN
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            OnDown();
+        }
+
+        // JUMP
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnJump();
+        }
 
         transform.position = _pos;
+    }
+    void OnLeft()
+    {
+        // TODO: Left logic here
+        MoveLeft();
+    }
+
+    void OnRight()
+    {
+        // TODO: Right logic here
+        MoveRight();
+    }
+
+    void OnUp()
+    {
+        // TODO: Up logic here
+        Jump();
+    }
+
+    void OnDown()
+    {
+        // TODO: Down logic here
+        Slide();
+    }
+
+    void OnJump()
+    {
+        // TODO: Jump logic here
+        Jump();
     }
 
     // ======================================================

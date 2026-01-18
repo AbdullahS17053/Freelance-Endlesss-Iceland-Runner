@@ -1,9 +1,35 @@
+using MoreMountains.InfiniteRunnerEngine;
 using UnityEngine;
 
 public class CollectionItem : MonoBehaviour
 {
     public bool coin;
     public ParticleSystem collectionParticle;
+    public Material CoinYellowMat;
+    public Material CoinSilverMat;
+    public MeshRenderer coinRenderer;
+
+    void OnEnable()
+    {
+        if (!coin) return;
+
+        GameplayManager.instance.OnTimerActiveChanged += OnTimerChanged;
+
+        // Apply current state immediately
+        OnTimerChanged(GameplayManager.instance.timerActive);
+    }
+
+    public void destroyCoin()
+    {
+        GameplayManager.instance.OnTimerActiveChanged -= OnTimerChanged;
+        Destroy(gameObject);
+    }
+
+    void OnTimerChanged(bool timerActive)
+    {
+        coinRenderer.sharedMaterial =
+            timerActive ? CoinSilverMat : CoinYellowMat;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,8 +58,15 @@ public class CollectionItem : MonoBehaviour
                 Destroy(particle.gameObject, particle.main.duration + particle.main.startLifetime.constantMax);
             }
 
-            // Disable or destroy the item
-            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            if (coin)
+            {
+                destroyCoin();
+            }
+            else
+            {
+                GameplayManager.instance.AddTimer();
+                Destroy(gameObject);
+            }
         }
     }
 }
