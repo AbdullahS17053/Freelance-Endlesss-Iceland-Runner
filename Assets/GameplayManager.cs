@@ -276,7 +276,6 @@ public class GameplayManager : MonoBehaviour
 
         scoreMultiplierBoaster = TimerBonusMultiplayer;
 
-        PlayTimerIntro();
     }
 
 
@@ -306,6 +305,7 @@ public class GameplayManager : MonoBehaviour
         else
         {
             StartTimerBooster();
+            PlayTimerIntro();
         }
     }
 
@@ -320,28 +320,17 @@ public class GameplayManager : MonoBehaviour
         // Start position (left off-screen)
         rt.anchoredPosition = new Vector2(-1000f, rt.anchoredPosition.y);
 
-
-        // Create sequence
-        Sequence seq = DOTween.Sequence();
-
-        seq.Append(
-            rt.DOAnchorPosX(0f, 0.4f)
-            .SetRelative(true)
-              .SetEase(Ease.OutQuad)
-        );
-
-        seq.AppendInterval(0.6f); // stay in center
-
-        seq.Append(
-            rt.DOAnchorPosX(1000f, 0.4f)
-            .SetRelative(true)
-              .SetEase(Ease.InQuad)
-        );
-
-        seq.OnComplete(() =>
-        {
-            TimerIntro.SetActive(false); // optional
-        });
+        rt.DOAnchorPosX(0f, 1f)
+            .SetRelative(false)
+              .SetEase(Ease.OutCubic).OnComplete(() =>
+              {
+                  rt.DOAnchorPosX(1000f, 1f)
+                      .SetRelative(true)
+                        .SetEase(Ease.InCubic).SetDelay(1f).OnComplete(() =>
+                        {
+                            TimerIntro.SetActive(false);
+                        });
+              });
     }
 
     private void ResetGame()

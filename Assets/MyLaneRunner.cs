@@ -173,7 +173,7 @@ public class MyLaneRunner : MonoBehaviour
             float t = _actionTime / SlideDuration;
             _pos.y = Mathf.Lerp(_pos.y, BASE_Y - SlideHeight, t);
 
-            if (t >= 1f)
+            if (t >= 2f)
                 EndSlide();
         }
     }
