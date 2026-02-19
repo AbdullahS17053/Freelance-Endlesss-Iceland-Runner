@@ -29,6 +29,14 @@ public class MyLevelManager : MonoBehaviour
     private int _rightMostTileIndex;
     private float _elapsedGameTime;
 
+    public void ChangeLevel(GameObject _1, GameObject _2, GameObject _3)
+    {
+        EnvironmentTiles[0] = _1;
+        EnvironmentTiles[1] = _2;
+        EnvironmentTiles[2] = _3;
+        CacheTiles();
+    }
+
     #region Unity Lifecycle
 
     private void Awake()

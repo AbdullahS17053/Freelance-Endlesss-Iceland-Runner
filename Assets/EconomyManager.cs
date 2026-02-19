@@ -203,4 +203,21 @@ public class EconomyManager : MonoBehaviour
             return false;
         }
     }
+
+    public bool CanAfford(int coin, int gem)
+    {
+        if (coins > coin && gems > gem)
+            {
+                gems -= gem;
+                coins -= coin;
+                MySaveLoadManager.Instance.AddGems(gems);
+            MySaveLoadManager.Instance.AddCoins(coins);
+            UpdateUI();
+                return true;
+            }
+        else
+        {
+            return false; 
+        }
+    }
 }
