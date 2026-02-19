@@ -89,6 +89,22 @@ public class EconomyManager : MonoBehaviour
         }
             
     }
+    public void OpenConfirmFreePanel(ItemData item)
+    {
+        currentSelectedItem = item;
+        if (confirmPanel != null)
+            confirmPanel.SetActive(true);
+
+        if (item.coin)
+        {
+            confirmItemText.text = item.amount.ToString() + "x" + " Coins for Free";
+        }
+        else
+        {
+            confirmItemText.text = item.amount.ToString() + "x" + " Gems for Free";
+        }
+            
+    }
 
     public void CloseConfirmPanel()
     {
@@ -101,13 +117,12 @@ public class EconomyManager : MonoBehaviour
     {
         if (currentSelectedItem == null) return;
 
-        if (currentSelectedItem.coin)
+        if (currentSelectedItem.free)
         {
             if(currentSelectedItem.price <= gems)
             {
                 AddCoins(currentSelectedItem.amount);
-                gems -= (int)MathF.Ceiling(currentSelectedItem.price);
-
+                currentSelectedItem.claimed.SetActive(true);
 
                 UpdateUI();
                 CloseConfirmPanel();
@@ -115,11 +130,26 @@ public class EconomyManager : MonoBehaviour
         }
         else
         {
-            AddGems(currentSelectedItem.amount);
+            if (currentSelectedItem.coin)
+            {
+                if (currentSelectedItem.price <= gems)
+                {
+                    AddCoins(currentSelectedItem.amount);
+                    gems -= (int)MathF.Ceiling(currentSelectedItem.price);
 
 
-            UpdateUI();
-            CloseConfirmPanel();
+                    UpdateUI();
+                    CloseConfirmPanel();
+                }
+            }
+            else
+            {
+                AddGems(currentSelectedItem.amount);
+
+
+                UpdateUI();
+                CloseConfirmPanel();
+            }
         }
 
         FakeAdsManager.Instance.ShowInterstitial();
@@ -146,11 +176,31 @@ public class EconomyManager : MonoBehaviour
         MySaveLoadManager.Instance.AddCoins(coins);
         UpdateUI();
     }
+    public void RemoveCoins(int amount)
+    {
+        coins -= amount;
+        MySaveLoadManager.Instance.AddCoins(coins);
+        UpdateUI();
+    }
 
     public void AddGems(int amount)
     {
         gems += amount;
         MySaveLoadManager.Instance.AddGems(gems);
         UpdateUI();
+    }
+    public bool RemoveGems(int amount)
+    {
+        if(gems > amount)
+        {
+            gems -= amount;
+            MySaveLoadManager.Instance.AddGems(gems);
+            UpdateUI();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

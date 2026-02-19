@@ -37,6 +37,17 @@ public class GameplayManager : MonoBehaviour
     public bool timerActive;
     public event Action<bool> OnTimerActiveChanged;
 
+    public int lives = 1;
+    public TextMeshProUGUI livesText;
+
+    public int coinsBoosterActive;
+    public int gemsBoosterActive;
+
+    public int scoreMultiplierUpgrade;
+
+    public TextMeshProUGUI ScoreBoasterBoastedScore;
+    public TextMeshProUGUI ScoreBoasterMultiplier;
+
     #region
 
     [Header("Crashed UI")]
@@ -140,6 +151,18 @@ public class GameplayManager : MonoBehaviour
 
     public void Crashed()
     {
+        coinsBoosterActive = 1;
+        gemsBoosterActive = 1;
+
+        if (lives > 0)
+        {
+            lives--;
+            UpdateLivesUI();
+            levelManager.ResetLevel();
+            AudioManager.instance.PlayRevive();
+            return;
+        }
+
         AudioManager.instance.PlayLost();
         crashScoreText.text = currentScore.ToString();
         CrashPanel.SetActive(true);
@@ -167,11 +190,15 @@ public class GameplayManager : MonoBehaviour
 
     public void GameOver()
     {
+        
+
         newMySpawner.EnableSpawning = false;
         AudioManager.instance.PlayWin();
         CrashPanel.SetActive(false);
         gameOverPanel.SetActive(true);
 
+        ScoreBoasterBoastedScore.text = "+" + (currentScore * scoreMultiplierUpgrade - currentScore).ToString();
+        ScoreBoasterMultiplier.text = scoreMultiplierUpgrade + "x";
         FinalScoreText.text = currentScore.ToString();
         coinsText.text = inCoin.ToString();
         gemsText.text = inGem.ToString();
@@ -220,7 +247,7 @@ public class GameplayManager : MonoBehaviour
 
     public void AddCoin()
     {
-        inCoin += scoreMultiplierBoaster;
+        inCoin += scoreMultiplierBoaster * coinsBoosterActive;
         coinParticle.DOPlay();
 
 
@@ -228,12 +255,14 @@ public class GameplayManager : MonoBehaviour
     }
     public void AddGem()
     {
-        inGem++;
+        inGem += 1 * gemsBoosterActive;
         gemParticle.DOPlay();
         gemsTextG.text = inGem.ToString();
     }
 
     #endregion
+
+
 
     private void FixedUpdate()
     {
@@ -268,6 +297,7 @@ public class GameplayManager : MonoBehaviour
         OnTimerActiveChanged?.Invoke(timerActive);
 
         timerRemaining = Random.Range(TimerTime.x, TimerTime.y);
+        timerRemaining = timerRemaining * UpgradeManager.Instance.AuroraTime();
 
         TimerPanel.SetActive(true);
         TimerIntro.SetActive(true);
@@ -320,21 +350,28 @@ public class GameplayManager : MonoBehaviour
         // Start position (left off-screen)
         rt.anchoredPosition = new Vector2(-1000f, rt.anchoredPosition.y);
 
-        rt.DOAnchorPosX(0f, 1f)
-            .SetRelative(false)
+        rt.DOAnchorPosX(1000f, 0.2f)
+            .SetRelative(true)
               .SetEase(Ease.OutCubic).OnComplete(() =>
               {
-                  rt.DOAnchorPosX(1000f, 1f)
+                  rt.DOAnchorPosX(1000f, 0.2f)
                       .SetRelative(true)
-                        .SetEase(Ease.InCubic).SetDelay(1f).OnComplete(() =>
+                        .SetEase(Ease.InCubic).SetDelay(0.2f).OnComplete(() =>
                         {
                             TimerIntro.SetActive(false);
                         });
               });
     }
-
+    private void UpdateLivesUI()
+    {
+        livesText.text = lives.ToString();
+    }
     private void ResetGame()
     {
+        lives = UpgradeManager.Instance.Shield();
+        coinsBoosterActive = UpgradeManager.Instance.CoinMultiplier();
+        gemsBoosterActive = UpgradeManager.Instance.GemMultiplier();
+        scoreMultiplierUpgrade = UpgradeManager.Instance.ScoreMultiplier();
         revives = 3;
         revivesText.text = revives.ToString();
         currentScore = 0;

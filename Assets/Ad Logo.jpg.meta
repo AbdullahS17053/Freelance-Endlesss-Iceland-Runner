@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Ad Logo_0: 8171873862902283660
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
