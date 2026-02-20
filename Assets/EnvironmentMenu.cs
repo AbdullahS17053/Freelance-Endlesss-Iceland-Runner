@@ -23,6 +23,8 @@ public class EnvironmentMenu : MonoBehaviour
 
     public Button[] buttons;
 
+    public GameObject lockedPanel;
+
     public float move;
     public int selection;
 
@@ -46,6 +48,10 @@ public class EnvironmentMenu : MonoBehaviour
             buttons[0].gameObject.SetActive(true);
             buttons[1].gameObject.SetActive(false);
         }
+        else
+        {
+            lockedPanel.SetActive(true);
+        }
     }
 
     public void MoveRight()
@@ -58,7 +64,8 @@ public class EnvironmentMenu : MonoBehaviour
         }
         else
         {
-            moving.DOMoveX(-750, 0.2f).SetRelative(true);
+            float with = moving.rect.width/2;
+            moving.DOAnchorPosX(-with, 0.2f).SetRelative(true);
         }
             Environs[selection].SelectIt();
 
@@ -83,7 +90,8 @@ public class EnvironmentMenu : MonoBehaviour
         }
         else
         {
-            moving.DOMoveX(750, 0.2f).SetRelative(true);
+            float with = moving.rect.width/2;
+            moving.DOAnchorPosX(with, 0.2f).SetRelative(true);
         }
         Environs[selection].SelectIt();
 

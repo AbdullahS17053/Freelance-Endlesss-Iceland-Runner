@@ -206,9 +206,16 @@ public class GameplayManager : MonoBehaviour
         CrashPanel.SetActive(false);
         gameOverPanel.SetActive(true);
 
-        ScoreBoasterBoastedScore.text = "+" + (currentScore * scoreMultiplierUpgrade - currentScore).ToString();
+        int finalScore = currentScore * scoreMultiplierUpgrade - currentScore;
+
+        Debug.Log(scoreMultiplierUpgrade);
+        Debug.Log(currentScore);
+        Debug.Log(finalScore);
+        Debug.Log(currentScore * scoreMultiplierUpgrade);
+
+        ScoreBoasterBoastedScore.text = "+" + finalScore.ToString();
         ScoreBoasterMultiplier.text = scoreMultiplierUpgrade + "x";
-        FinalScoreText.text = currentScore.ToString();
+        FinalScoreText.text = (currentScore * scoreMultiplierUpgrade).ToString();
         coinsText.text = inCoin.ToString();
         gemsText.text = inGem.ToString();
     }
@@ -216,12 +223,12 @@ public class GameplayManager : MonoBehaviour
     public void GameFinished()
     {
         StopTimerBooster();
-        lasScore = currentScore;
+        lasScore = currentScore * scoreMultiplierUpgrade;
 
-        if (currentScore > highScore)
+        if (lasScore > highScore)
         {
             // new high score
-            highScore = currentScore;
+            highScore = lasScore;
 
             foreach(LeaderData me in leaderMe)
             {
