@@ -154,15 +154,6 @@ public class GameplayManager : MonoBehaviour
         coinsBoosterActive = 1;
         gemsBoosterActive = 1;
 
-        if (lives > 0)
-        {
-            lives--;
-            UpdateLivesUI();
-            levelManager.ResetLevel();
-            AudioManager.instance.PlayRevive();
-            return;
-        }
-
         AudioManager.instance.PlayLost();
         crashScoreText.text = currentScore.ToString();
         CrashPanel.SetActive(true);
@@ -170,8 +161,26 @@ public class GameplayManager : MonoBehaviour
         crashScoreText.text = currentScore.ToString();
         levelManager.CrashLevel();
         inGame = false;
-    }
 
+        if (lives > 0)
+        {
+            lives--;
+            UpdateLivesUI();
+            ReviveLives();
+        }
+    }
+    public void ReviveLives()
+    {
+
+        revivesText.text = revives.ToString();
+
+        AudioManager.instance.PlayRevive();
+        CrashPanel.SetActive(false);
+        HubPanel.SetActive(true);
+        levelManager.ResetLevelR();
+
+        inGame = true;
+    }
     public void Revive()
     {
         if (revives == 0) return;
@@ -369,6 +378,7 @@ public class GameplayManager : MonoBehaviour
     private void ResetGame()
     {
         lives = UpgradeManager.Instance.Shield();
+        UpdateLivesUI();
         coinsBoosterActive = UpgradeManager.Instance.CoinMultiplier();
         gemsBoosterActive = UpgradeManager.Instance.GemMultiplier();
         scoreMultiplierUpgrade = UpgradeManager.Instance.ScoreMultiplier();

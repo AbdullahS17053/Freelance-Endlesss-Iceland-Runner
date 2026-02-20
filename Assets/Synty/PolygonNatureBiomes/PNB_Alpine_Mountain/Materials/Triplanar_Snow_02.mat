@@ -76,7 +76,6 @@ Material:
     - _Bottom_Smoothness: 0
     - _Cull: 2
     - _Enable_Base_Texture: 1
-    - _Enable_Snow: 1
     m_Colors:
     - _Triplanar_Normal_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

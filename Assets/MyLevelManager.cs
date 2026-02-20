@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MyLevelManager : MonoBehaviour
@@ -166,19 +167,30 @@ public class MyLevelManager : MonoBehaviour
             spawner.EnableSpawning = true;
     }
 
+    public void ResetLevelR()
+    {
+        StartCoroutine(delay());
+    }
+
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(1f);
+        ResetLevel();
+    }
+
     public void ResetLevel()
     {
         _gameStarted = false;
         _obstacleSpeeds = _currentTileSpeed;
 
-        for (int i = 0; i < _tileTransforms.Length; i++)
+        /*for (int i = 0; i < _tileTransforms.Length; i++)
         {
             _tileTransforms[i].position = new Vector3(
                 i * tileWidth,
                 _tileTransforms[i].position.y,
                 lockedZ
             );
-        }
+        }*/
 
         _rightMostTileIndex = _tileTransforms.Length - 1;
 
