@@ -14,6 +14,7 @@ public class EnvironmentMenu : MonoBehaviour
     }
 
     public MyLevelManager levelManager;
+    public SmartObstacleSpawner[] smartObstacleSpawner;
     public RectTransform moving;
 
     public ENV[] envs;
@@ -35,9 +36,15 @@ public class EnvironmentMenu : MonoBehaviour
             for (int i = 0; i < envs.Length; i++)
             {
                 envs[i].environment.SetActive(false);
+                smartObstacleSpawner[i].gameObject.SetActive(false);
+                smartObstacleSpawner[i].EnableSpawning = false;
             }
+
             envs[selection].environment.SetActive(true);
             levelManager.ChangeLevel(envs[selection]._1, envs[selection]._2, envs[selection]._3);
+
+            smartObstacleSpawner[selection].gameObject.SetActive(true);
+            levelManager.spawner = smartObstacleSpawner[selection];
         }
     }
     public void TryUnlock()
