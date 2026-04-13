@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Synty_SkyDome_AridDesert
-  m_Shader: {fileID: -6465566751694194690, guid: de1d86872962c37429cb628a7de53613, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: de1d86872962c37429cb628a7de53613,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -18,7 +19,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -37,6 +39,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
     - _Distance: 200
     - _Enable_UV_Based: 0
     - _Falloff: 1
@@ -47,6 +51,7 @@ Material:
     - _Bottom_Color: {r: 0.7843138, g: 0.3137255, b: 0.23529413, a: 1}
     - _Top_Color: {r: 0.10196079, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &720473716835861848
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -59,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 9
 --- !u!114 &5852728473127758948
 MonoBehaviour:
   m_ObjectHideFlags: 11
