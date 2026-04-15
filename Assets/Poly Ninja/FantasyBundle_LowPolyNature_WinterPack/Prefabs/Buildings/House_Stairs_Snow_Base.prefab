@@ -58,89 +58,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 442580118571c1848939792c9f2dc7d5, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &2492822373231460799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7048645921290223524}
-  - component: {fileID: 4191924652060361285}
-  - component: {fileID: 657067481775414775}
-  m_Layer: 0
-  m_Name: House_Stairs_Snow_LOD1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7048645921290223524
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2492822373231460799}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.029744148, y: -0.9386231, z: 0.38619983}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4798489370139926273}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4191924652060361285
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2492822373231460799}
-  m_Mesh: {fileID: -8188753527660467556, guid: f5aeb73c7d4f1c946b6dc851d33b30e6, type: 3}
---- !u!23 &657067481775414775
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2492822373231460799}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -175,7 +95,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4798489370139926273}
-  - component: {fileID: 4450249080448987104}
   m_Layer: 0
   m_Name: House_Stairs_Snow_Base
   m_TagString: Untagged
@@ -200,120 +119,8 @@ Transform:
   - {fileID: 7769201021337913505}
   - {fileID: 9166159501848051900}
   - {fileID: 3922615349512344677}
-  - {fileID: 7186263869529721812}
-  - {fileID: 7048645921290223524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &4450249080448987104
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6933308083113917414}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.033169746, y: 0.16444159, z: 0.36483896}
-  m_Size: 4.462018
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.21713969
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 1855169319700634496}
-    - renderer: {fileID: 9025714741976828949}
-    - renderer: {fileID: 1036662437059003450}
-  - screenRelativeHeight: 0.03807518
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 2260128726281315416}
-    - renderer: {fileID: 657067481775414775}
-    - renderer: {fileID: 1036662437059003450}
-  m_Enabled: 1
---- !u!1 &7195137287827508917
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7186263869529721812}
-  - component: {fileID: 5722611247238911501}
-  - component: {fileID: 2260128726281315416}
-  m_Layer: 0
-  m_Name: House_Stairs_SideSnow_LOD1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7186263869529721812
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7195137287827508917}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0331697, y: -0.5346189, z: 0.3598091}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4798489370139926273}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5722611247238911501
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7195137287827508917}
-  m_Mesh: {fileID: -8204290424771831462, guid: 60ca4f1d52e34be46aabb96e91746a40, type: 3}
---- !u!23 &2260128726281315416
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7195137287827508917}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 442580118571c1848939792c9f2dc7d5, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7576465749020031522
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +179,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -454,7 +264,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: e16cfd664a643384399f5f863b855504, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c35293349db319541a64b12aa519c66a, type: 2}
     m_RemovedComponents: []
@@ -464,12 +274,8 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: e16cfd664a643384399f5f863b855504, type: 3}
 --- !u!4 &1036662437056710362 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: e16cfd664a643384399f5f863b855504, type: 3}
-  m_PrefabInstance: {fileID: 1036662437057109082}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &1036662437059003450 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2300000, guid: e16cfd664a643384399f5f863b855504, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: e16cfd664a643384399f5f863b855504,
+    type: 3}
   m_PrefabInstance: {fileID: 1036662437057109082}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7769201021338047009
@@ -533,40 +339,11 @@ PrefabInstance:
     - {fileID: 3300000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3244438798978926803}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}
 --- !u!4 &7769201021337913505 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: afbce784a3b66964c935d47564a3c83e,
+    type: 3}
   m_PrefabInstance: {fileID: 7769201021338047009}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7769201021338080385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}
-  m_PrefabInstance: {fileID: 7769201021338047009}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &3244438798978926803
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7769201021338080385}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: afbce784a3b66964c935d47564a3c83e, type: 3}

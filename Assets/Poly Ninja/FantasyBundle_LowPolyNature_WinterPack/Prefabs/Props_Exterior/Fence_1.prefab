@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4750500244764300}
-  - component: {fileID: 205891791544262094}
   m_Layer: 0
   m_Name: Fence_1
   m_TagString: Untagged
@@ -33,25 +32,6 @@ Transform:
   - {fileID: 4798705925890878}
   m_Father: {fileID: 4990477680118884}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &205891791544262094
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387870665242532}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.00000022351742, y: 0.45794904, z: 0.0000020861626}
-  m_Size: 1.8673134
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.048382718
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 23193616096968328}
-  m_Enabled: 1
 --- !u!1 &1412016388438290
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +90,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -210,7 +193,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4880049732047760}
-  - component: {fileID: 33264271043613484}
   - component: {fileID: 64090467113449500}
   m_Layer: 0
   m_Name: Fence_1_Colider
@@ -234,14 +216,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4798705925890878}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33264271043613484
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777210827576882}
-  m_Mesh: {fileID: 4300000, guid: e1d3e20c96443814ca55dd4ec1a75f3d, type: 3}
 --- !u!64 &64090467113449500
 MeshCollider:
   m_ObjectHideFlags: 0

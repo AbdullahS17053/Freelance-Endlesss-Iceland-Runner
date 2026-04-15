@@ -91,6 +91,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -160,7 +163,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4803673057208988}
-  - component: {fileID: 205852039921945438}
   m_Layer: 0
   m_Name: Lantern_2
   m_TagString: Untagged
@@ -184,25 +186,6 @@ Transform:
   - {fileID: 4080407009870540}
   m_Father: {fileID: 4659629949147766}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &205852039921945438
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718136025980938}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0.000000059604645, z: -0.000000029802322}
-  m_Size: 0.80522394
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.054363325
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 23168132638514236}
-  m_Enabled: 1
 --- !u!1 &1788100144044140
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4977259936147388}
   - component: {fileID: 33344967621381014}
-  - component: {fileID: 64152096497147128}
   m_Layer: 0
   m_Name: Lantern_2_Colider
   m_TagString: Untagged
@@ -243,28 +225,6 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788100144044140}
-  m_Mesh: {fileID: 4300000, guid: 427007b78a7faf64c89b3a864fdf3913, type: 3}
---- !u!64 &64152096497147128
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1788100144044140}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 427007b78a7faf64c89b3a864fdf3913, type: 3}
 --- !u!1 &7715267280147106613
 GameObject:
@@ -307,9 +267,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7715267280147106613}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 2
-  m_Shape: 0
   m_Color: {r: 1, g: 0.6554665, b: 0.3915094, a: 1}
   m_Intensity: 1.31
   m_Range: 4.8018646
@@ -359,8 +318,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!122 &5888125047141361359
 Halo:
   m_ObjectHideFlags: 0

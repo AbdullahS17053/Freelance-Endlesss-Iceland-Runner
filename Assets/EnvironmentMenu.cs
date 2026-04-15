@@ -65,9 +65,9 @@ public class EnvironmentMenu : MonoBehaviour
     {
         Environs[selection].DeSelectIt();
         selection++;
-        if (selection > 2)
+        if (selection > 4)
         {
-            selection = 2;
+            selection = 4;
         }
         else
         {
