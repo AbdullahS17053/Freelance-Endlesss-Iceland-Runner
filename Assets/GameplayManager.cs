@@ -25,6 +25,9 @@ public class GameplayManager : MonoBehaviour
 
     [Header("Timer UI")]
     public GameObject TimerPanel;
+    public CanvasGroup TimerCover;
+    public float mainAlphaValue = 1;
+    public float lowAlphaValue = 0.2f;
     public GameObject TimerIntro;
     public GameObject TimerAurora;
     public GameObject TimerAurora1;
@@ -81,6 +84,7 @@ public class GameplayManager : MonoBehaviour
 
 
     [Header("Leaderboard")]
+    public TextMeshProUGUI highScoreProfileStat;
     public List<LeaderData> leaders;
     public LeaderData[] leaderMe;
 
@@ -113,6 +117,7 @@ public class GameplayManager : MonoBehaviour
             {
                 me.updateScore(highScore);
             }
+            highScoreProfileStat.text = highScore.ToString();
 
             RearrangeLeaders();
         }
@@ -235,6 +240,7 @@ public class GameplayManager : MonoBehaviour
                 me.updateScore(highScore);
             }
 
+            highScoreProfileStat.text = highScore.ToString();
             RearrangeLeaders();
 
             MySaveLoadManager.Instance.SaveBestScore(highScore);
@@ -315,6 +321,14 @@ public class GameplayManager : MonoBehaviour
         timerRemaining = Random.Range(TimerTime.x, TimerTime.y);
         timerRemaining = timerRemaining * UpgradeManager.Instance.AuroraTime();
 
+        if (levelManager.currentEnvironment == 4)
+        {
+            TimerCover.alpha = lowAlphaValue;
+        }
+        else
+        {
+            TimerCover.alpha = mainAlphaValue;
+        }
         TimerPanel.SetActive(true);
         TimerIntro.SetActive(true);
         TimerAurora.SetActive(true);

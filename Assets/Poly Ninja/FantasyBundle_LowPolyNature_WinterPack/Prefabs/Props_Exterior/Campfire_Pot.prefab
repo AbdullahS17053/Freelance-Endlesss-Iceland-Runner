@@ -749,7 +749,7 @@ PrefabInstance:
     - target: {fileID: 8753800977437185441, guid: 4a18f1951c5c1484c983dd7f90ec8cff,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -773,6 +773,10 @@ PrefabInstance:
     - target: {fileID: 1593618065860596, guid: bf8661fa378cd9542865ab31b6ac8966, type: 3}
       propertyPath: m_Name
       value: Fire_Small
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593618065860596, guid: bf8661fa378cd9542865ab31b6ac8966, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4386808154822862, guid: bf8661fa378cd9542865ab31b6ac8966, type: 3}
       propertyPath: m_LocalScale.x

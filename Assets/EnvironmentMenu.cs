@@ -41,7 +41,7 @@ public class EnvironmentMenu : MonoBehaviour
             }
 
             envs[selection].environment.SetActive(true);
-            levelManager.ChangeLevel(envs[selection]._1, envs[selection]._2, envs[selection]._3);
+            levelManager.ChangeLevel(envs[selection]._1, envs[selection]._2, envs[selection]._3, selection);
 
             smartObstacleSpawner[selection].gameObject.SetActive(true);
             levelManager.spawner = smartObstacleSpawner[selection];
