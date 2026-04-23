@@ -12,6 +12,7 @@ public class MyLevelManager : MonoBehaviour
 
     [Header("Environment Tiles")]
     public GameObject[] EnvironmentTiles;
+    public int currentEnvironment = 2;
     public float lockedZ = 0f;
     public float baseTileSpeed = 5f;
     public float tileSpeedIncreasePerSecond = 0.05f;
@@ -30,8 +31,9 @@ public class MyLevelManager : MonoBehaviour
     private int _rightMostTileIndex;
     private float _elapsedGameTime;
 
-    public void ChangeLevel(GameObject _1, GameObject _2, GameObject _3)
+    public void ChangeLevel(GameObject _1, GameObject _2, GameObject _3, int num)
     {
+        currentEnvironment = num;
         EnvironmentTiles[0] = _1;
         EnvironmentTiles[1] = _2;
         EnvironmentTiles[2] = _3;
