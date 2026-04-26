@@ -136,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 6201137609775594002}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1.24, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -206,7 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5966225536971975939}
   - component: {fileID: 7329719831114707415}
-  - component: {fileID: 2599343969250505765}
+  - component: {fileID: 6964153737048199093}
   m_Layer: 0
   m_Name: Obstacle Tall (1)
   m_TagString: Obs
@@ -249,7 +249,7 @@ MonoBehaviour:
   AutoDestroy: 1
   DestroyXThreshold: -50
   Lifetime: 60
---- !u!65 &2599343969250505765
+--- !u!65 &6964153737048199093
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,5 +268,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.1606712, y: 4.123437, z: 2.183479}
-  m_Center: {x: -0.047356486, y: 1.9869518, z: -0.0061098337}
+  m_Size: {x: 1.6045301, y: 1.0097812, z: 1.4322003}
+  m_Center: {x: -0.022964358, y: 0.43012458, z: 0.10609418}
